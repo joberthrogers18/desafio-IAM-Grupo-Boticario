@@ -4,21 +4,22 @@
   "description": "Esse projeto consiste na solução proposta para o teste case para a area de IAM do Grupo Boticário",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joberthrogers18/desafio-IAM-Grupo-Boticario.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Jôberth Rogers Tavares Costa",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/joberthrogers18/desafio-IAM-Grupo-Boticario/issues"
   },
   "homepage": "https://github.com/joberthrogers18/desafio-IAM-Grupo-Boticario#readme",
   "dependencies": {
-    "express": "^4.19.2",
+    "fastify": "^4.27.0",
     "jest": "^29.7.0",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7"
