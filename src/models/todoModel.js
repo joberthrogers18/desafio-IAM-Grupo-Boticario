@@ -17,7 +17,7 @@ const Todo = sequelizeInst.define("Todo", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  completed: {
+  isCompleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
@@ -28,4 +28,4 @@ Todo.beforeCreate((user) => {
   user.id = generateHash();
 });
 
-Todo.module.exports = Todo;
+module.exports = Todo;
