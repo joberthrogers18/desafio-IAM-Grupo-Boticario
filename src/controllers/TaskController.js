@@ -25,6 +25,78 @@ class TaskController {
     }
   }
 
+  async getTaskById(request, reply) {
+    try {
+      const id =
+        request.params && request.params.hasOwnProperty("id")
+          ? request.params.id
+          : null;
+
+      if (!id) {
+        return reply
+          .status(StatusCode.BAD_REQUEST)
+          .send(
+            new ResponseErrorDTO(
+              "Os id não podem ser nulos",
+              StatusCode.BAD_REQUEST
+            ).buildResponseObject()
+          );
+      }
+
+      const task = await TaskService.getTaskById(id);
+      return reply
+        .status(StatusCode.SUCCESS)
+        .send(new ResponseDTO(task, "").buildResponseObject());
+    } catch (error) {
+      console.log("error: ", error);
+
+      if (error instanceof NotFoundException) {
+        return reply
+          .status(StatusCode.NOT_FOUND)
+          .send(
+            new ResponseErrorDTO(
+              "Tarefa não encontrada. Forneça um numero de id valido",
+              StatusCode.NOT_FOUND
+            ).buildResponseObject()
+          );
+      } else {
+        return reply
+          .status(StatusCode.INTERNAL_SERVER_ERROR)
+          .send(
+            new ResponseErrorDTO(
+              "Não foi possível recuperar a tarefa atual. Por favor tente novamente mais tarde",
+              StatusCode.INTERNAL_SERVER_ERROR
+            ).buildResponseObject()
+          );
+      }
+    }
+  }
+
+  async getAllByCompletion(request, reply) {
+    try {
+      const isComplete =
+        request.query && request.query.hasOwnProperty("estaCompleto")
+          ? request.params.id
+          : true;
+
+      const tasks = await TaskService.getTaskByCompletion(isComplete);
+      return reply
+        .status(StatusCode.SUCCESS)
+        .send(new ResponseDTO(tasks, "").buildResponseObject());
+    } catch (error) {
+      console.log("error: ", error);
+
+      return reply
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send(
+          new ResponseErrorDTO(
+            "Não foi possível recuperar as tarefas listadas. Por favor tente novamente mais tarde",
+            StatusCode.INTERNAL_SERVER_ERROR
+          ).buildResponseObject()
+        );
+    }
+  }
+
   async postTaskObject(request, reply) {
     try {
       const taskBody = request.body;
