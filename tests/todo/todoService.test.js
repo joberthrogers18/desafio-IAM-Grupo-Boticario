@@ -20,13 +20,13 @@ describe("Todo Service", () => {
         id: hashIdsMock[0],
         title: "Titulo da minha tarefa 1",
         description: "Descrição da minha tarefa 1",
-        completed: false,
+        isCompleted: false,
       },
       {
         id: hashIdsMock[1],
         title: "Titulo da minha tarefa 2",
         description: "Descrição da minha tarefa 2",
-        completed: true,
+        isCompleted: true,
       },
     ];
     todoDao.findAll.mockResolvedValue(mockTodos);
@@ -61,7 +61,7 @@ describe("Todo Service", () => {
       id: hashIdsMock[0],
       title: "Titulo da minha tarefa",
       description: "Descrição da minha tarefa",
-      completed: false,
+      isCompleted: false,
     };
     todoDao.create.mockResolvedValue(mockTodo);
 
@@ -89,7 +89,7 @@ describe("Todo Service", () => {
       id: hashIdsMock[0],
       title: "Titulo atualizado",
       description: "Descrição atualizada",
-      completed: true,
+      isCompleted: true,
     };
     todoDao.update.mockResolvedValue(mockTodo);
 

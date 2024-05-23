@@ -12,6 +12,8 @@ class TodoController {
         .status(StatusCode.SUCCESS)
         .send(new ResponseDTO(todos, "").buildResponseObject());
     } catch (error) {
+      console.log("error: ", error);
+
       return reply
         .status(StatusCode.INTERNAL_SERVER_ERROR)
         .send(
@@ -59,7 +61,8 @@ class TodoController {
           ).buildResponseObject()
         );
     } catch (error) {
-      console.log(error);
+      console.log("error: ", error);
+
       return reply
         .status(StatusCode.INTERNAL_SERVER_ERROR)
         .send(
@@ -127,6 +130,8 @@ class TodoController {
           ).buildResponseObject()
         );
     } catch (error) {
+      console.log("error: ", error);
+
       if (error instanceof NotFoundException) {
         return reply
           .status(StatusCode.NOT_FOUND)
@@ -166,6 +171,8 @@ class TodoController {
           ).buildResponseObject()
         );
     } catch (error) {
+      console.log("error: ", error);
+
       if (error instanceof NotFoundException) {
         return reply
           .status(StatusCode.NOT_FOUND)
