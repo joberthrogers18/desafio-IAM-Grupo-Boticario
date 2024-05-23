@@ -1,3 +1,5 @@
+// TODO: centralize config with environment variable
+
 const Sequelize = require("sequelize");
 
 const sequelizeInstance = new Sequelize({

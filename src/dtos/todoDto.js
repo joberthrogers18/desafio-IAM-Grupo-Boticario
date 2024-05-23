@@ -1,9 +1,9 @@
 class TodoDto {
   constructor(id, title, description, isCompleted) {
     this.id = id;
-    this.title = title;
-    this.description = description;
-    this.isCompleted = isCompleted;
+    this.titulo = title;
+    this.descricao = description;
+    this.estaCompleto = isCompleted;
   }
 }
 
