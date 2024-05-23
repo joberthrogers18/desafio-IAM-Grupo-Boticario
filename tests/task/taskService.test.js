@@ -51,7 +51,7 @@ describe("Task Service", () => {
   });
 
   it("should create a task", async () => {
-    const TaskDto = new TaskDto(
+    const taskDto = new TaskDto(
       null,
       "Titulo da minha tarefa",
       "Descrição da minha tarefa",
@@ -65,9 +65,9 @@ describe("Task Service", () => {
     };
     TaskDao.create.mockResolvedValue(mockTask);
 
-    const createdTask = await TaskService.createTask(TaskDto);
+    const createdTask = await TaskService.createTask(taskDto);
 
-    expect(TaskDao.create).toHaveBeenCalledWith(TaskDto);
+    expect(TaskDao.create).toHaveBeenCalledWith(taskDto);
     expect(createdTask).toEqual(
       new TaskDto(
         hashIdsMock[0],
@@ -79,7 +79,7 @@ describe("Task Service", () => {
   });
 
   it("should update a task", async () => {
-    const TaskDto = new TaskDto(
+    const taskDto = new TaskDto(
       hashIdsMock[0],
       "Titulo atualizado",
       "Descrição atualizada",
@@ -93,9 +93,9 @@ describe("Task Service", () => {
     };
     TaskDao.update.mockResolvedValue(mockTask);
 
-    const updatedTask = await TaskService.updateTask(hashIdsMock[0], TaskDto);
+    const updatedTask = await TaskService.updateTask(hashIdsMock[0], taskDto);
 
-    expect(TaskDao.update).toHaveBeenCalledWith(hashIdsMock[0], TaskDto);
+    expect(TaskDao.update).toHaveBeenCalledWith(hashIdsMock[0], taskDto);
     expect(updatedTask).toEqual(
       new TaskDto(
         hashIdsMock[0],
