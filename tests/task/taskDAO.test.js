@@ -26,6 +26,13 @@ describe("TaskDao", () => {
     expect(tasks).toEqual([mockTask]);
   });
 
+  it("should find all by key searched", async () => {
+    Task.findAll.mockResolvedValue([mockTask]);
+    const tasks = await TaskDao.findByKey("isCompleted", true);
+    expect(Task.findAll).toHaveBeenCalledTimes(1);
+    expect(tasks).toEqual([mockTask]);
+  });
+
   it("should find a task by id", async () => {
     Task.findByPk.mockResolvedValue(mockTask);
     const task = await TaskDao.findById(hashIdMock);

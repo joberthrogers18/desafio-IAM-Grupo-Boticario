@@ -50,6 +50,52 @@ describe("Task Service", () => {
     ]);
   });
 
+  it("should get all tasks searched by id", async () => {
+    const mockTasks = {
+      id: hashIdsMock[0],
+      title: "Titulo da minha tarefa 1",
+      description: "Descrição da minha tarefa 1",
+      isCompleted: false,
+    };
+
+    TaskDao.findById.mockResolvedValue(mockTasks);
+    const tasks = await TaskService.getTaskById(hashIdsMock[0]);
+
+    expect(TaskDao.findById).toHaveBeenCalledTimes(1);
+    expect(tasks).toEqual(
+      new TaskDto(
+        hashIdsMock[0],
+        "Titulo da minha tarefa 1",
+        "Descrição da minha tarefa 1",
+        false
+      )
+    );
+  });
+
+  it("should get all tasks completed", async () => {
+    const mockTasks = [
+      {
+        id: hashIdsMock[0],
+        title: "Titulo da minha tarefa 1",
+        description: "Descrição da minha tarefa 1",
+        isCompleted: false,
+      },
+    ];
+
+    TaskDao.findByKey.mockResolvedValue(mockTasks);
+    const tasks = await TaskService.getTaskByCompletion(true);
+
+    expect(TaskDao.findByKey).toHaveBeenCalledTimes(1);
+    expect(tasks).toEqual([
+      new TaskDto(
+        hashIdsMock[0],
+        "Titulo da minha tarefa 1",
+        "Descrição da minha tarefa 1",
+        false
+      ),
+    ]);
+  });
+
   it("should create a task", async () => {
     const taskDto = new TaskDto(
       null,
