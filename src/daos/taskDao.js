@@ -15,7 +15,13 @@ class TaskDao {
   }
 
   async findById(id) {
-    return Task.findByPk(id);
+    const taskData = await Task.findByPk(id);
+
+    if (!taskData) {
+      throw new NotFoundException("Tarefa não encontrada!");
+    }
+
+    return taskData;
   }
 
   async create(task) {
@@ -24,22 +30,12 @@ class TaskDao {
 
   async update(id, task) {
     const taskData = await this.findById(id);
-
-    if (!taskData) {
-      throw new NotFoundException("Tarefa não encontrada!");
-    }
-
     await taskData.update(task);
     return taskData;
   }
 
   async delete(id, task) {
     const taskData = await this.findById(id);
-
-    if (!taskData) {
-      throw new NotFoundException("Tarefa não encontrada!");
-    }
-
     await taskData.destroy(task);
     return taskData;
   }

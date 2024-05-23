@@ -75,9 +75,11 @@ class TaskController {
   async getAllByCompletion(request, reply) {
     try {
       const isComplete =
-        request.query && request.query.hasOwnProperty("estaCompleto")
-          ? request.query.estaCompleto
-          : true;
+        request.query &&
+        Object.keys(request.query).length > 0 &&
+        Object.keys(request.query).includes("estaCompleto")
+          ? request.query.estaCompleto === "true"
+          : false;
 
       const tasks = await TaskService.getTaskByCompletion(isComplete);
       return reply
