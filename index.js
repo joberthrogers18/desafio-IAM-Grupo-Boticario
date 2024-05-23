@@ -1,5 +1,7 @@
 const fastify = require("fastify")({ logger: true });
 
+// TODO: let the port dynamic for using with environment variable
+
 const start = async () => {
   try {
     await fastify.listen({

@@ -6,3 +6,5 @@ class TodoDto {
     this.isCompleted = isCompleted;
   }
 }
+
+module.exports = TodoDto;
