@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 
 const sequelizeInstance = new Sequelize({
   dialect: "sqlite",
-  storage: "todo.db",
+  storage: "task.db",
 });
 
 module.exports = sequelizeInstance;

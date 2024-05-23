@@ -1,21 +1,21 @@
-const TodoService = require("../../src/services/todoService");
-const todoDao = require("../../src/daos/todoDao");
-const TodoDto = require("../../src/dtos/todoDto");
+const TaskService = require("../../src/services/TaskService");
+const TaskDao = require("../../src/daos/TaskDao");
+const TaskDto = require("../../src/dtos/TaskDto");
 
 const hashIdsMock = [
   "F371BC4A311F2B009EEF952DD83CA80E2B60026C8E935592D0F9C308453C813E",
   "C8CC3EBD6C5385086DA49D890780E41F0AA3D3FD21793E551828EFBCCEC5284C",
 ];
 
-jest.mock("../../src/daos/todoDao");
+jest.mock("../../src/daos/TaskDao");
 
-describe("Todo Service", () => {
+describe("Task Service", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should get all todos", async () => {
-    const mockTodos = [
+  it("should get all tasks", async () => {
+    const mockTasks = [
       {
         id: hashIdsMock[0],
         title: "Titulo da minha tarefa 1",
@@ -29,19 +29,19 @@ describe("Todo Service", () => {
         isCompleted: true,
       },
     ];
-    todoDao.findAll.mockResolvedValue(mockTodos);
+    TaskDao.findAll.mockResolvedValue(mockTasks);
 
-    const todos = await TodoService.getAllTodos();
+    const tasks = await TaskService.getAllTasks();
 
-    expect(todoDao.findAll).toHaveBeenCalledTimes(1);
-    expect(todos).toEqual([
-      new TodoDto(
+    expect(TaskDao.findAll).toHaveBeenCalledTimes(1);
+    expect(tasks).toEqual([
+      new TaskDto(
         hashIdsMock[0],
         "Titulo da minha tarefa 1",
         "Descrição da minha tarefa 1",
         false
       ),
-      new TodoDto(
+      new TaskDto(
         hashIdsMock[1],
         "Titulo da minha tarefa 2",
         "Descrição da minha tarefa 2",
@@ -50,26 +50,26 @@ describe("Todo Service", () => {
     ]);
   });
 
-  it("should create a todo", async () => {
-    const todoDto = new TodoDto(
+  it("should create a task", async () => {
+    const TaskDto = new TaskDto(
       null,
       "Titulo da minha tarefa",
       "Descrição da minha tarefa",
       false
     );
-    const mockTodo = {
+    const mockTask = {
       id: hashIdsMock[0],
       title: "Titulo da minha tarefa",
       description: "Descrição da minha tarefa",
       isCompleted: false,
     };
-    todoDao.create.mockResolvedValue(mockTodo);
+    TaskDao.create.mockResolvedValue(mockTask);
 
-    const createdTodo = await TodoService.createTodo(todoDto);
+    const createdTask = await TaskService.createTask(TaskDto);
 
-    expect(todoDao.create).toHaveBeenCalledWith(todoDto);
-    expect(createdTodo).toEqual(
-      new TodoDto(
+    expect(TaskDao.create).toHaveBeenCalledWith(TaskDto);
+    expect(createdTask).toEqual(
+      new TaskDto(
         hashIdsMock[0],
         "Titulo da minha tarefa",
         "Descrição da minha tarefa",
@@ -78,26 +78,26 @@ describe("Todo Service", () => {
     );
   });
 
-  it("should update a todo", async () => {
-    const todoDto = new TodoDto(
+  it("should update a task", async () => {
+    const TaskDto = new TaskDto(
       hashIdsMock[0],
       "Titulo atualizado",
       "Descrição atualizada",
       true
     );
-    const mockTodo = {
+    const mockTask = {
       id: hashIdsMock[0],
       title: "Titulo atualizado",
       description: "Descrição atualizada",
       isCompleted: true,
     };
-    todoDao.update.mockResolvedValue(mockTodo);
+    TaskDao.update.mockResolvedValue(mockTask);
 
-    const updatedTodo = await TodoService.updateTodo(hashIdsMock[0], todoDto);
+    const updatedTask = await TaskService.updateTask(hashIdsMock[0], TaskDto);
 
-    expect(todoDao.update).toHaveBeenCalledWith(hashIdsMock[0], todoDto);
-    expect(updatedTodo).toEqual(
-      new TodoDto(
+    expect(TaskDao.update).toHaveBeenCalledWith(hashIdsMock[0], TaskDto);
+    expect(updatedTask).toEqual(
+      new TaskDto(
         hashIdsMock[0],
         "Titulo atualizado",
         "Descrição atualizada",
@@ -106,8 +106,8 @@ describe("Todo Service", () => {
     );
   });
 
-  it("should delete a todo", async () => {
-    await TodoService.deleteTodo(hashIdsMock[0]);
-    expect(todoDao.delete).toHaveBeenCalledWith(hashIdsMock[0]);
+  it("should delete a task", async () => {
+    await TaskService.deleteTask(hashIdsMock[0]);
+    expect(TaskDao.delete).toHaveBeenCalledWith(hashIdsMock[0]);
   });
 });

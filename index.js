@@ -1,4 +1,4 @@
-const Todo = require("./src/models/todoModel");
+const Task = require("./src/models/TaskModel");
 const applyRoutes = require("./src/routes");
 const fastify = require("fastify")({ logger: true });
 
@@ -6,7 +6,7 @@ const fastify = require("fastify")({ logger: true });
 
 const start = async () => {
   try {
-    Todo.sync();
+    Task.sync();
 
     applyRoutes(fastify);
 

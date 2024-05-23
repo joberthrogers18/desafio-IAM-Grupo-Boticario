@@ -1,5 +1,5 @@
-const TodoController = require("../../src/controllers/todoController");
-const TodoService = require("../../src/services/todoService");
+const TaskController = require("../../src/controllers/taskController");
+const TaskService = require("../../src/services/TaskService");
 const StatusCode = require("../../src/constants/StatusCode");
 const ResponseDTO = require("../../src/dtos/ResponseDTO");
 const ResponseErrorDTO = require("../../src/dtos/ResponseErrorDTO");
@@ -8,9 +8,9 @@ const NotFoundException = require("../../src/exceptions/NotFoundException");
 const hashIdMock =
   "F371BC4A311F2B009EEF952DD83CA80E2B60026C8E935592D0F9C308453C813E";
 
-jest.mock("../../src/services/todoService");
+jest.mock("../../src/services/TaskService");
 
-describe("Todo Controller", () => {
+describe("Task Controller", () => {
   let request;
   let reply;
 
@@ -23,9 +23,9 @@ describe("Todo Controller", () => {
     };
   });
 
-  describe("getAllTodo", () => {
-    it("should get all todos and return response with status 200", async () => {
-      const mockTodos = [
+  describe("getAllTask", () => {
+    it("should get all tasks and return response with status 200", async () => {
+      const mockTasks = [
         {
           id: hashIdMock,
           titulo: "Titulo da tarefa",
@@ -33,20 +33,20 @@ describe("Todo Controller", () => {
           estaCompleto: false,
         },
       ];
-      TodoService.getAllTodos.mockResolvedValue(mockTodos);
+      TaskService.getAllTasks.mockResolvedValue(mockTasks);
 
-      await TodoController.getAllTodo(request, reply);
+      await TaskController.getAllTask(request, reply);
 
-      expect(TodoService.getAllTodos).toHaveBeenCalled();
+      expect(TaskService.getAllTasks).toHaveBeenCalled();
       expect(reply.send).toHaveBeenCalledWith(
-        new ResponseDTO(mockTodos, "").buildResponseObject()
+        new ResponseDTO(mockTasks, "").buildResponseObject()
       );
     });
 
     it("should return 500 if there is an error", async () => {
-      TodoService.getAllTodos.mockRejectedValue(new Error("Database Error"));
+      TaskService.getAllTasks.mockRejectedValue(new Error("Database Error"));
 
-      await TodoController.getAllTodo(request, reply);
+      await TaskController.getAllTask(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(
         StatusCode.INTERNAL_SERVER_ERROR
@@ -60,23 +60,23 @@ describe("Todo Controller", () => {
     });
   });
 
-  describe("postTodoObject", () => {
-    it("should create a new todo and return response with status 201", async () => {
-      const todoBody = {
+  describe("postTaskObject", () => {
+    it("should create a new task and return response with status 201", async () => {
+      const taskBody = {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: false,
       };
-      request.body = todoBody;
-      const mockTodo = { id: 1, ...todoBody };
-      TodoService.createTodo.mockResolvedValue(mockTodo);
+      request.body = taskBody;
+      const mockTask = { id: 1, ...taskBody };
+      TaskService.createTask.mockResolvedValue(mockTask);
 
-      await TodoController.postTodoObject(request, reply);
+      await TaskController.postTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(StatusCode.CREATED);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseDTO(
-          mockTodo,
+          mockTask,
           "Tarefa criada com sucesso"
         ).buildResponseObject()
       );
@@ -85,7 +85,7 @@ describe("Todo Controller", () => {
     it("should return 400 if request body is invalid", async () => {
       request.body = { titulo: "Novo Titulo" };
 
-      await TodoController.postTodoObject(request, reply);
+      await TaskController.postTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
       expect(reply.send).toHaveBeenCalledWith(
@@ -97,15 +97,15 @@ describe("Todo Controller", () => {
     });
 
     it("should return 500 if there is an error", async () => {
-      const todoBody = {
+      const taskBody = {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: false,
       };
-      request.body = todoBody;
-      TodoService.createTodo.mockRejectedValue(new Error("Database Error"));
+      request.body = taskBody;
+      TaskService.createTask.mockRejectedValue(new Error("Database Error"));
 
-      await TodoController.postTodoObject(request, reply);
+      await TaskController.postTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(
         StatusCode.INTERNAL_SERVER_ERROR
@@ -119,25 +119,25 @@ describe("Todo Controller", () => {
     });
   });
 
-  describe("putTodoObject", () => {
-    it("should update a todo and return response with status 201", async () => {
+  describe("putTaskObject", () => {
+    it("should update a task and return response with status 201", async () => {
       const id = 1;
-      const todoBody = {
+      const taskBody = {
         id,
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
       };
-      request.body = { id, tarefa: todoBody };
-      const mockTodo = { ...todoBody };
-      TodoService.updateTodo.mockResolvedValue(mockTodo);
+      request.body = { id, tarefa: taskBody };
+      const mockTask = { ...taskBody };
+      TaskService.updateTask.mockResolvedValue(mockTask);
 
-      await TodoController.putTodoObject(request, reply);
+      await TaskController.putTaskObject(request, reply);
 
       expect(reply.code).toHaveBeenCalledWith(StatusCode.SUCCESS);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseDTO(
-          mockTodo,
+          mockTask,
           "Tarefa atualizada com sucesso"
         ).buildResponseObject()
       );
@@ -146,7 +146,7 @@ describe("Todo Controller", () => {
     it("should return 400 if request body is invalid", async () => {
       request.body = { tarefa: { titulo: "Tarefa atualizada" } };
 
-      await TodoController.putTodoObject(request, reply);
+      await TaskController.putTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
       expect(reply.send).toHaveBeenCalledWith(
@@ -157,18 +157,18 @@ describe("Todo Controller", () => {
       );
     });
 
-    it("should return 404 if todo not found", async () => {
-      const todoBody = {
+    it("should return 404 if task not found", async () => {
+      const taskBody = {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
       };
-      request.body = { id: hashIdMock, tarefa: todoBody };
-      TodoService.updateTodo.mockRejectedValue(
+      request.body = { id: hashIdMock, tarefa: taskBody };
+      TaskService.updateTask.mockRejectedValue(
         new NotFoundException("Tarefa não encontrada")
       );
 
-      await TodoController.putTodoObject(request, reply);
+      await TaskController.putTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(StatusCode.NOT_FOUND);
       expect(reply.send).toHaveBeenCalledWith(
@@ -180,15 +180,15 @@ describe("Todo Controller", () => {
     });
 
     it("should return 500 if there is an error", async () => {
-      const todoBody = {
+      const taskBody = {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
       };
-      request.body = { id: hashIdMock, tarefa: todoBody };
-      TodoService.updateTodo.mockRejectedValue(new Error("Database Error"));
+      request.body = { id: hashIdMock, tarefa: taskBody };
+      TaskService.updateTask.mockRejectedValue(new Error("Database Error"));
 
-      await TodoController.putTodoObject(request, reply);
+      await TaskController.putTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(
         StatusCode.INTERNAL_SERVER_ERROR
@@ -202,13 +202,13 @@ describe("Todo Controller", () => {
     });
   });
 
-  describe("deleteTodoObject", () => {
-    it("should delete a todo and return response with status 201", async () => {
+  describe("deleteTaskObject", () => {
+    it("should delete a task and return response with status 201", async () => {
       request.params.id = hashIdMock;
 
-      await TodoController.deleteTodoObject(request, reply);
+      await TaskController.deleteTaskObject(request, reply);
 
-      expect(TodoService.deleteTodo).toHaveBeenCalledWith(hashIdMock);
+      expect(TaskService.deleteTask).toHaveBeenCalledWith(hashIdMock);
       expect(reply.code).toHaveBeenCalledWith(StatusCode.SUCCESS);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseDTO(
@@ -218,13 +218,13 @@ describe("Todo Controller", () => {
       );
     });
 
-    it("should return 404 if todo not found", async () => {
+    it("should return 404 if task not found", async () => {
       request.params.id = hashIdMock;
-      TodoService.deleteTodo.mockRejectedValue(
+      TaskService.deleteTask.mockRejectedValue(
         new NotFoundException("Tarefa não encontrada")
       );
 
-      await TodoController.deleteTodoObject(request, reply);
+      await TaskController.deleteTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(StatusCode.NOT_FOUND);
       expect(reply.send).toHaveBeenCalledWith(
@@ -237,11 +237,11 @@ describe("Todo Controller", () => {
 
     it("should return 500 if there is an error", async () => {
       request.params.id = hashIdMock;
-      TodoService.deleteTodo.mockRejectedValue(
+      TaskService.deleteTask.mockRejectedValue(
         new Error("Erro no Banco de Dados")
       );
 
-      await TodoController.deleteTodoObject(request, reply);
+      await TaskController.deleteTaskObject(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(
         StatusCode.INTERNAL_SERVER_ERROR

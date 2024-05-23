@@ -1,4 +1,4 @@
-class TodoDto {
+class TaskDto {
   constructor(id, title, description, isCompleted) {
     this.id = id;
     this.titulo = title;
@@ -7,4 +7,4 @@ class TodoDto {
   }
 }
 
-module.exports = TodoDto;
+module.exports = TaskDto;

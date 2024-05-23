@@ -1,7 +1,7 @@
-const TodoRoutes = require("./TodoRoutes");
+const TaskRoutes = require("./TaskRoutes");
 
 function applyRoutes(app) {
-  app.register(TodoRoutes);
+  app.register(TaskRoutes);
   app.get("/", async (request, reply) => {
     return { message: "Tudo funcionando corretamente." };
   });

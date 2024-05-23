@@ -1,8 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelizeInst = require("../config/configDatabase");
-const { generateHash } = require("../utils/encryption");
 
-const Todo = sequelizeInst.define("Todo", {
+const Task = sequelizeInst.define("Task", {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
@@ -22,6 +21,20 @@ const Todo = sequelizeInst.define("Todo", {
     allowNull: false,
     defaultValue: false,
   },
+  creationDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    validate: {
+      isDate: true,
+    },
+  },
+  modifiedDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    validate: {
+      isDate: true,
+    },
+  },
 });
 
-module.exports = Todo;
+module.exports = Task;

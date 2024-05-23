@@ -2,15 +2,15 @@ const StatusCode = require("../constants/StatusCode");
 const ResponseDTO = require("../dtos/ResponseDTO");
 const ResponseErrorDTO = require("../dtos/ResponseErrorDTO");
 const NotFoundException = require("../exceptions/NotFoundException");
-const TodoService = require("../services/TodoService");
+const TaskService = require("../services/TaskService");
 
-class TodoController {
-  async getAllTodo(request, reply) {
+class TaskController {
+  async getAllTask(request, reply) {
     try {
-      const todos = await TodoService.getAllTodos();
+      const tasks = await TaskService.getAllTasks();
       return reply
         .status(StatusCode.SUCCESS)
-        .send(new ResponseDTO(todos, "").buildResponseObject());
+        .send(new ResponseDTO(tasks, "").buildResponseObject());
     } catch (error) {
       console.log("error: ", error);
 
@@ -25,15 +25,15 @@ class TodoController {
     }
   }
 
-  async postTodoObject(request, reply) {
+  async postTaskObject(request, reply) {
     try {
-      const todoBody = request.body;
+      const taskBody = request.body;
 
       if (
-        !todoBody ||
-        !todoBody.hasOwnProperty("titulo") ||
-        !todoBody.hasOwnProperty("descricao") ||
-        !todoBody.hasOwnProperty("estaCompleto")
+        !taskBody ||
+        !taskBody.hasOwnProperty("titulo") ||
+        !taskBody.hasOwnProperty("descricao") ||
+        !taskBody.hasOwnProperty("estaCompleto")
       ) {
         return reply
           .status(StatusCode.BAD_REQUEST)
@@ -46,17 +46,17 @@ class TodoController {
       }
 
       const body = {
-        title: todoBody.titulo,
-        description: todoBody.descricao,
-        isCompleted: todoBody.estaCompleto,
+        title: taskBody.titulo,
+        description: taskBody.descricao,
+        isCompleted: taskBody.estaCompleto,
       };
 
-      const createdTodo = await TodoService.createTodo(body);
+      const createdTask = await TaskService.createTask(body);
       return reply
         .status(StatusCode.CREATED)
         .send(
           new ResponseDTO(
-            createdTodo,
+            createdTask,
             "Tarefa criada com sucesso"
           ).buildResponseObject()
         );
@@ -74,19 +74,19 @@ class TodoController {
     }
   }
 
-  async putTodoObject(request, reply) {
+  async putTaskObject(request, reply) {
     try {
       const id =
         request.body && request.body.hasOwnProperty("id")
           ? request.body.id
           : null;
 
-      const todoBody =
+      const taskBody =
         request.body && request.body.hasOwnProperty("tarefa")
           ? request.body.tarefa
           : null;
 
-      if (!id || !todoBody) {
+      if (!id || !taskBody) {
         return reply
           .status(StatusCode.BAD_REQUEST)
           .send(
@@ -98,10 +98,10 @@ class TodoController {
       }
 
       if (
-        !todoBody ||
-        !todoBody.hasOwnProperty("titulo") ||
-        !todoBody.hasOwnProperty("descricao") ||
-        !todoBody.hasOwnProperty("estaCompleto")
+        !taskBody ||
+        !taskBody.hasOwnProperty("titulo") ||
+        !taskBody.hasOwnProperty("descricao") ||
+        !taskBody.hasOwnProperty("estaCompleto")
       ) {
         return reply
           .status(StatusCode.BAD_REQUEST)
@@ -115,17 +115,17 @@ class TodoController {
 
       const body = {
         id,
-        title: todoBody.titulo,
-        description: todoBody.descricao,
-        isCompleted: todoBody.estaCompleto,
+        title: taskBody.titulo,
+        description: taskBody.descricao,
+        isCompleted: taskBody.estaCompleto,
       };
 
-      const updatedTodo = await TodoService.updateTodo(id, body);
+      const updatedTask = await TaskService.updateTask(id, body);
       return reply
         .code(StatusCode.SUCCESS)
         .send(
           new ResponseDTO(
-            updatedTodo,
+            updatedTask,
             "Tarefa atualizada com sucesso"
           ).buildResponseObject()
         );
@@ -154,14 +154,14 @@ class TodoController {
     }
   }
 
-  async deleteTodoObject(request, reply) {
+  async deleteTaskObject(request, reply) {
     try {
       const id =
         request.params && request.params.hasOwnProperty("id")
           ? request.params.id
           : null;
 
-      await TodoService.deleteTodo(id);
+      await TaskService.deleteTask(id);
       return reply
         .code(StatusCode.SUCCESS)
         .send(
@@ -196,4 +196,4 @@ class TodoController {
   }
 }
 
-module.exports = new TodoController();
+module.exports = new TaskController();
