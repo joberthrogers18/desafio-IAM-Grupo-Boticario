@@ -66,7 +66,6 @@ class TaskService {
   async updateTask(id, taskObj) {
     const currentDate = new Date();
     taskObj.modifiedDate = adjustToBrazilTimezone(currentDate);
-
     const task = await TaskDao.update(id, taskObj);
     return new TaskDto(
       task.id,

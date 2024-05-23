@@ -6,12 +6,15 @@ const fastify = require("fastify")({ logger: true });
 
 const start = async () => {
   try {
+    const PORT = process.env.PORT_SERVER || 3000;
+
     Task.sync();
 
     applyRoutes(fastify);
 
     await fastify.listen({
-      port: 3000,
+      port: PORT,
+      host: "0.0.0.0",
     });
     fastify.log.info(
       `Server is running in port: ${fastify.server.address().port}`
