@@ -15,7 +15,7 @@ describe("Task Controller", () => {
   let reply;
 
   beforeEach(() => {
-    request = { body: {}, params: {} };
+    request = { body: {}, params: {}, query: {} };
     reply = {
       code: jest.fn().mockReturnThis(),
       status: jest.fn().mockReturnThis(),
@@ -44,9 +44,120 @@ describe("Task Controller", () => {
     });
 
     it("should return 500 if there is an error", async () => {
-      TaskService.getAllTasks.mockRejectedValue(new Error("Database Error"));
+      TaskService.getAllTasks.mockRejectedValue(
+        new Error("Erro na base de dados")
+      );
 
       await TaskController.getAllTask(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(
+        StatusCode.INTERNAL_SERVER_ERROR
+      );
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "Não foi possível recuperar as tarefas listadas. Por favor tente novamente mais tarde",
+          StatusCode.INTERNAL_SERVER_ERROR
+        ).buildResponseObject()
+      );
+    });
+  });
+
+  describe("getTaskById", () => {
+    it("should get task by id and return response with status 200", async () => {
+      const mockTask = {
+        id: hashIdMock,
+        titulo: "Titulo da tarefa",
+        descricao: "Descrição da tarefa",
+        estaCompleto: false,
+      };
+      request.params.id = hashIdMock;
+      TaskService.getTaskById.mockResolvedValue(mockTask);
+
+      await TaskController.getTaskById(request, reply);
+
+      expect(TaskService.getTaskById).toHaveBeenCalled();
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseDTO(mockTask, "").buildResponseObject()
+      );
+    });
+
+    it("should return 400 if id was not inserted", async () => {
+      await TaskController.getTaskById(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "Os id não podem ser nulos",
+          StatusCode.BAD_REQUEST
+        ).buildResponseObject()
+      );
+    });
+
+    it("should return 404 if there is not task", async () => {
+      request.params.id = hashIdMock;
+      TaskService.getTaskById.mockRejectedValue(
+        new NotFoundException("Tarefa não encontrada")
+      );
+
+      await TaskController.getTaskById(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.NOT_FOUND);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "Tarefa não encontrada. Forneça um numero de id valido",
+          StatusCode.NOT_FOUND
+        ).buildResponseObject()
+      );
+    });
+
+    it("should return 500 if there is an error", async () => {
+      request.params.id = hashIdMock;
+      TaskService.getTaskById.mockRejectedValue(
+        new Error("Erro na base de dados")
+      );
+
+      await TaskController.getTaskById(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(
+        StatusCode.INTERNAL_SERVER_ERROR
+      );
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "Não foi possível recuperar a tarefa atual. Por favor tente novamente mais tarde",
+          StatusCode.INTERNAL_SERVER_ERROR
+        ).buildResponseObject()
+      );
+    });
+  });
+
+  describe("getAllByCompletion", () => {
+    it("should get task by completion and return response with status 200", async () => {
+      const mockTasks = [
+        {
+          id: hashIdMock,
+          titulo: "Titulo da tarefa",
+          descricao: "Descrição da tarefa",
+          estaCompleto: true,
+        },
+      ];
+      request.params.id = hashIdMock;
+      TaskService.getTaskByCompletion.mockResolvedValue(mockTasks);
+
+      await TaskController.getAllByCompletion(request, reply);
+
+      expect(TaskService.getTaskByCompletion).toHaveBeenCalled();
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseDTO(mockTasks, "").buildResponseObject()
+      );
+    });
+
+    it("should return 500 if there is an error", async () => {
+      request.query.estaCompleto = false;
+      TaskService.getTaskByCompletion.mockRejectedValue(
+        new Error("Erro na banco de dados")
+      );
+
+      await TaskController.getAllByCompletion(request, reply);
 
       expect(reply.status).toHaveBeenCalledWith(
         StatusCode.INTERNAL_SERVER_ERROR

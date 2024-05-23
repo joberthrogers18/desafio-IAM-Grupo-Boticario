@@ -76,7 +76,7 @@ class TaskController {
     try {
       const isComplete =
         request.query && request.query.hasOwnProperty("estaCompleto")
-          ? request.params.id
+          ? request.query.estaCompleto
           : true;
 
       const tasks = await TaskService.getTaskByCompletion(isComplete);
