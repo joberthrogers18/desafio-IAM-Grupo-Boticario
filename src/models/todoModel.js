@@ -24,8 +24,4 @@ const Todo = sequelizeInst.define("Todo", {
   },
 });
 
-Todo.beforeCreate((user) => {
-  user.id = generateHash();
-});
-
 module.exports = Todo;

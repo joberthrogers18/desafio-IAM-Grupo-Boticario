@@ -8,11 +8,11 @@ class TodoController {
   async getAllTodo(request, reply) {
     try {
       const todos = await TodoService.getAllTodos();
-      reply
+      return reply
         .status(StatusCode.SUCCESS)
         .send(new ResponseDTO(todos, "").buildResponseObject());
     } catch (error) {
-      reply
+      return reply
         .status(StatusCode.INTERNAL_SERVER_ERROR)
         .send(
           new ResponseErrorDTO(
@@ -33,7 +33,7 @@ class TodoController {
         !todoBody.hasOwnProperty("descricao") ||
         !todoBody.hasOwnProperty("estaCompleto")
       ) {
-        reply
+        return reply
           .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
@@ -50,7 +50,7 @@ class TodoController {
       };
 
       const createdTodo = await TodoService.createTodo(body);
-      reply
+      return reply
         .status(StatusCode.CREATED)
         .send(
           new ResponseDTO(
@@ -59,7 +59,8 @@ class TodoController {
           ).buildResponseObject()
         );
     } catch (error) {
-      reply
+      console.log(error);
+      return reply
         .status(StatusCode.INTERNAL_SERVER_ERROR)
         .send(
           new ResponseErrorDTO(
@@ -83,7 +84,7 @@ class TodoController {
           : null;
 
       if (!id || !todoBody) {
-        reply
+        return reply
           .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
@@ -99,7 +100,7 @@ class TodoController {
         !todoBody.hasOwnProperty("descricao") ||
         !todoBody.hasOwnProperty("estaCompleto")
       ) {
-        reply
+        return reply
           .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
@@ -117,7 +118,7 @@ class TodoController {
       };
 
       const updatedTodo = await TodoService.updateTodo(id, body);
-      reply
+      return reply
         .code(StatusCode.SUCCESS)
         .send(
           new ResponseDTO(
@@ -127,7 +128,7 @@ class TodoController {
         );
     } catch (error) {
       if (error instanceof NotFoundException) {
-        reply
+        return reply
           .status(StatusCode.NOT_FOUND)
           .send(
             new ResponseErrorDTO(
@@ -136,7 +137,7 @@ class TodoController {
             ).buildResponseObject()
           );
       } else {
-        reply
+        return reply
           .status(StatusCode.INTERNAL_SERVER_ERROR)
           .send(
             new ResponseErrorDTO(
@@ -156,17 +157,17 @@ class TodoController {
           : null;
 
       await TodoService.deleteTodo(id);
-      reply
+      return reply
         .code(StatusCode.SUCCESS)
         .send(
           new ResponseDTO(
             null,
-            "Tarefa criada com sucesso"
+            "Tarefa deletada com sucesso"
           ).buildResponseObject()
         );
     } catch (error) {
       if (error instanceof NotFoundException) {
-        reply
+        return reply
           .status(StatusCode.NOT_FOUND)
           .send(
             new ResponseErrorDTO(
@@ -175,7 +176,7 @@ class TodoController {
             ).buildResponseObject()
           );
       } else {
-        reply
+        return reply
           .status(StatusCode.INTERNAL_SERVER_ERROR)
           .send(
             new ResponseErrorDTO(
@@ -188,4 +189,4 @@ class TodoController {
   }
 }
 
-module.exports = TodoController;
+module.exports = new TodoController();
