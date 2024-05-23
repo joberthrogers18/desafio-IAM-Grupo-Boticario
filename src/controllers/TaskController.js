@@ -37,7 +37,7 @@ class TaskController {
           .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
-              "Os id não podem ser nulos",
+              "O id não pode ser nulo",
               StatusCode.BAD_REQUEST
             ).buildResponseObject()
           );

@@ -87,7 +87,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Os id não podem ser nulos",
+          "O id não pode ser nulo",
           StatusCode.BAD_REQUEST
         ).buildResponseObject()
       );
