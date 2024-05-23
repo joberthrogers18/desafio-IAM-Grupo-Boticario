@@ -19,7 +19,32 @@ class TaskService {
     );
   }
 
-  // async getTaskById()
+  async getTaskById(id) {
+    const task = await TaskDao.findById(id);
+    return new TaskDto(
+      task.id,
+      task.title,
+      task.description,
+      task.isCompleted,
+      task.creationDate,
+      task.modifiedDate
+    );
+  }
+
+  async getTaskByCompletion(isCompleted) {
+    const tasks = await TaskDao.findByKey("isCompleted", isCompleted);
+    return tasks.map(
+      (task) =>
+        new TaskDto(
+          task.id,
+          task.title,
+          task.description,
+          task.isCompleted,
+          task.creationDate,
+          task.modifiedDate
+        )
+    );
+  }
 
   async createTask(taskObj) {
     const hashId = generateHash();

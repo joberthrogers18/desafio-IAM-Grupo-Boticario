@@ -6,6 +6,14 @@ class TaskDao {
     return await Task.findAll();
   }
 
+  async findByKey(key, value) {
+    return await Task.findAll({
+      where: {
+        [key]: value,
+      },
+    });
+  }
+
   async findById(id) {
     return Task.findByPk(id);
   }
