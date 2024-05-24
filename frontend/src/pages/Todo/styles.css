@@ -9,3 +9,9 @@
   max-width: 600px;
   height: 80vh;
 }
+
+.content-todo .btn-label,
+.content-todo .pi {
+  color: var(--primary-text-color);
+  font-weight: 700;
+}
