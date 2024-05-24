@@ -9,15 +9,18 @@ import CreationTask from "../../components/CreationTask";
 
 function Todo() {
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const toast = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+
       try {
         const response = await fetch("http://localhost:3000/tarefa");
-        const result = await response.json();
-        setTasks(result.data);
+        const responseJson = await response.json();
+        setTasks(responseJson.data);
       } catch (error) {
         toast.current.show({
           severity: "error",
@@ -25,6 +28,8 @@ function Todo() {
           detail:
             "Não possível carregar os dados das tarefas. Tente novamente mais tarde!",
         });
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -36,13 +41,14 @@ function Todo() {
       <div className="content-todo">
         <AlertInfo />
         <Button
+          disabled={loading}
           onClick={() => setVisible(true)}
           className="w-full mt-5 mb-5 flex justify-content-center"
         >
           <p className="btn-label m-0">Adicionar Tarefa</p>
           <i className="ml-3 pi pi-plus-circle"></i>
         </Button>
-        <ListTask />
+        <ListTask tasks={tasks} loading={loading} />
       </div>
       <CreationTask visible={visible} onChangeVisible={setVisible} />
       <Toast ref={toast} />
