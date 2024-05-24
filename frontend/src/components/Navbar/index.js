@@ -6,7 +6,7 @@ export default function Navbar() {
   const start = (
     <div className="title-nav ">
       <i className="pi pi-list-check ml-2 mr-2"></i>
-      Organizerando
+      OrganiZerando
     </div>
   );
 

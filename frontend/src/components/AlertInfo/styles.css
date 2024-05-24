@@ -1,0 +1,28 @@
+.alert-info .p-card .p-card-body {
+  background-color: var(--second-color-text);
+  border-radius: 30px;
+  border: 2px solid var(--primary-color);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
+
+.alert-info .title {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--text-color-secondary);
+}
+
+.alert-info .subtitle {
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.circle-progress {
+  background-color: var(--primary-color);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  color: var(--second-color-text);
+  font-size: 40px;
+  font-weight: 800;
+}

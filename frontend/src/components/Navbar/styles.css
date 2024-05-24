@@ -1,7 +1,8 @@
 .navbar .p-menubar {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   height: 70px;
   border-radius: 0;
+  border: none;
 }
 
 .title-nav {

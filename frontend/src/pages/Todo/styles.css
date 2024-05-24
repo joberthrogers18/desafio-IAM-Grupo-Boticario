@@ -1,0 +1,11 @@
+.todo-wrapper {
+  width: 100%;
+  height: calc(100vh - 70px);
+  background-color: var(--background-color);
+}
+
+.content-todo {
+  width: 600px;
+  max-width: 600px;
+  height: 80vh;
+}
