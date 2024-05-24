@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Card } from "primereact/card";
 import { ProgressBar } from "primereact/progressbar";
+import { Skeleton } from "primereact/skeleton";
 
 import "./styles.css";
 
-function AlertInfo() {
+function AlertInfo({ tasks, loading }) {
+  const [numberCompleted, setNumberCompleted] = useState(0);
+  const [numberTotal, setNumberTotal] = useState(0);
+  const [percentage, setPercentage] = useState(0);
+
+  useMemo(() => {
+    const total = tasks.length;
+    const completed = tasks.filter((task) => task.isComplete).length;
+    setNumberTotal(total);
+    setNumberCompleted(completed);
+    setPercentage((completed / total) * 100);
+  }, [tasks]);
+
   return (
     <div className="alert-info">
       <Card style={{ borderRadius: "30px" }}>
@@ -15,15 +28,32 @@ function AlertInfo() {
               <p className="subtitle mt-0">Continue no foco e não desista!</p>
             </div>
             <div className="col-12 md:col-5 flex justify-content-center align-items-center">
-              <div className="circle-progress flex justify-content-center align-items-center">
-                1/3
-              </div>
+              {loading ? (
+                <Skeleton
+                  width="120px"
+                  height="120px"
+                  className="mb-3"
+                  borderRadius="50%"
+                ></Skeleton>
+              ) : (
+                <div className="circle-progress flex justify-content-center align-items-center">
+                  {numberCompleted} / {numberTotal}
+                </div>
+              )}
             </div>
           </div>
 
           <div>
             <p className="label-progress mt-1 mb-2">Seu progresso</p>
-            <ProgressBar value={50}></ProgressBar>
+            {loading ? (
+              <Skeleton
+                width="100%"
+                height="24px"
+                borderRadius="5px"
+              ></Skeleton>
+            ) : (
+              <ProgressBar value={percentage}></ProgressBar>
+            )}
           </div>
         </div>
       </Card>

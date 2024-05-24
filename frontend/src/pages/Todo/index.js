@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 
@@ -16,7 +10,7 @@ import { TaskMapDto } from "../../dtos/TaskMapDto";
 
 function Todo() {
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const toast = useRef(null);
 
@@ -67,7 +61,7 @@ function Todo() {
   return (
     <div className="todo-wrapper w-full flex justify-content-center align-items-center p-3">
       <div className="content-todo">
-        <AlertInfo />
+        <AlertInfo tasks={tasks} loading={loading} />
         <Button
           disabled={loading}
           onClick={() => setVisible(true)}
