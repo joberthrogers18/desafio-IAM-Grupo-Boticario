@@ -33,7 +33,7 @@ function ListTask() {
               icon="pi pi-check"
               severity="success"
               aria-label="Completar"
-              className="mb-2 w-full md:w-6"
+              className="mb-2 w-full md:w-7"
               tooltip="Marcar como completa"
               tooltipOptions={{ position: "right" }}
             />
@@ -41,7 +41,7 @@ function ListTask() {
               icon="pi pi-trash"
               severity="danger"
               aria-label="Remover"
-              className="w-full md:w-6"
+              className="w-full md:w-7"
               tooltip="Remover"
               tooltipOptions={{ position: "right" }}
             />

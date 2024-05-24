@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <div className="navbar">
-      <Menubar start={start} />
+      <Menubar start={start} visible={false} />
     </div>
   );
 }
