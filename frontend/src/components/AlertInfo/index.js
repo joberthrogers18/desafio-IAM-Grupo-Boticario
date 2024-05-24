@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "primereact/card";
+import { ProgressBar } from "primereact/progressbar";
 
 import "./styles.css";
 
@@ -20,7 +21,10 @@ function AlertInfo() {
             </div>
           </div>
 
-          <div>Progress</div>
+          <div>
+            <p className="label-progress">Seu progresso</p>
+            <ProgressBar value={50}></ProgressBar>
+          </div>
         </div>
       </Card>
     </div>
