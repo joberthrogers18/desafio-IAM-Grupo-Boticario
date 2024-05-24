@@ -6,9 +6,49 @@ import { InputTextarea } from "primereact/inputtextarea";
 
 import "./styles.css";
 
-function CreationTask({ visible, onChangeVisible }) {
+function CreationTask({
+  visible,
+  onChangeVisible,
+  reloadData,
+  feedbackCreation,
+}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [loadingCreation, setLoadingCreation] = useState("");
+
+  async function requestCreateTask() {
+    try {
+      setLoadingCreation(true);
+      const body = {
+        titulo: title,
+        descricao: description,
+        estaCompleto: false,
+      };
+
+      const response = await fetch("http://localhost:3000/tarefa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const responseParseJson = await response.json();
+
+      feedbackCreation("Sucesso", responseParseJson.message, "success");
+      onChangeVisible(false);
+      reloadData();
+    } catch (e) {
+      console.log("Error in create task: ", e);
+      feedbackCreation(
+        "Erro",
+        "Nao foi possível criar a tarefa. Tente novamente mais tarde",
+        "error"
+      );
+    } finally {
+      setLoadingCreation(false);
+    }
+  }
 
   return (
     <div className="create-task">
@@ -43,7 +83,9 @@ function CreationTask({ visible, onChangeVisible }) {
         <Button
           label="Salvar"
           className="w-full"
+          loading={loadingCreation}
           disabled={title === "" || description === ""}
+          onClick={() => requestCreateTask()}
         />
       </Dialog>
     </div>
