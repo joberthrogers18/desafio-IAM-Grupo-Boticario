@@ -1,12 +1,13 @@
 const Task = require("./src/models/TaskModel");
 const applyRoutes = require("./src/routes");
 const fastify = require("fastify")({ logger: true });
-
-// TODO: let the port dynamic for using with environment variable
+const cors = require("@fastify/cors");
 
 const start = async () => {
   try {
     const PORT = process.env.PORT_SERVER || 3000;
+
+    fastify.register(cors, {});
 
     Task.sync();
 
