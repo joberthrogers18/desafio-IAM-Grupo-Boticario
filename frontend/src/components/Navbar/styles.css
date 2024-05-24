@@ -1,0 +1,16 @@
+.navbar .p-menubar {
+  background-color: var(--secondary-color);
+  height: 70px;
+  border-radius: 0;
+}
+
+.title-nav {
+  color: var(--second-color-text);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.title-nav .pi {
+  font-size: 20px;
+  font-weight: 700;
+}
