@@ -22,7 +22,7 @@ function AlertInfo() {
           </div>
 
           <div>
-            <p className="label-progress">Seu progresso</p>
+            <p className="label-progress mt-1 mb-2">Seu progresso</p>
             <ProgressBar value={50}></ProgressBar>
           </div>
         </div>

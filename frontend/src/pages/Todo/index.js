@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "primereact/button";
 
 import AlertInfo from "../../components/AlertInfo";
+import ListTask from "../../components/ListTask";
 import "./styles.css";
 
 function Todo() {
@@ -13,6 +14,7 @@ function Todo() {
           <p className="btn-label m-0">Adicionar Tarefa</p>
           <i className="ml-3 pi pi-plus-circle"></i>
         </Button>
+        <ListTask />
       </div>
     </div>
   );
