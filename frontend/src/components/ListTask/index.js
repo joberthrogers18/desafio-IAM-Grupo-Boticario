@@ -48,7 +48,7 @@ function ListTask({
 
   useMemo(() => {
     setFilterTasks(tasks.filter((task) => task.isComplete === isTaskCompleted));
-  }, [tasks]);
+  }, [tasks, isTaskCompleted]);
 
   async function updateStateCompletionTask(task) {
     try {

@@ -15,7 +15,7 @@ function AlertInfo({ tasks, loading }) {
     const completed = tasks.filter((task) => task.isComplete).length;
     setNumberTotal(total);
     setNumberCompleted(completed);
-    setPercentage((completed / total) * 100);
+    setPercentage(Math.round((completed / total) * 100));
   }, [tasks]);
 
   return (

@@ -16,6 +16,11 @@ function CreationTask({
   const [description, setDescription] = useState("");
   const [loadingCreation, setLoadingCreation] = useState("");
 
+  function cleanFields() {
+    setTitle("");
+    setDescription("");
+  }
+
   async function requestCreateTask() {
     try {
       setLoadingCreation(true);
@@ -36,6 +41,7 @@ function CreationTask({
       const responseParseJson = await response.json();
 
       feedbackCreation("Sucesso", responseParseJson.message, "success");
+      cleanFields();
       onChangeVisible(false);
       reloadData();
     } catch (e) {
