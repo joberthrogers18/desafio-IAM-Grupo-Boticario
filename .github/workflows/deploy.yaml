@@ -32,26 +32,6 @@ jobs:
           source /home/ubuntu/.bashrc
         EOF
 
-    - name: Install Docker (if not installed)
-      run: |
-        if ! command -v docker &> /dev/null
-        then
-          sudo apt update
-          sudo apt install -y docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-        fi
-
-    - name: Add user to Docker group (if not already added)
-      run: |
-        if ! getent group docker | grep -q "\b${USER}\b"
-        then
-          sudo usermod -aG docker $USER
-          newgrp docker <<EONG
-          docker ps
-          EONG
-        fi
-
     - name: Run Docker Compose on EC2
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
