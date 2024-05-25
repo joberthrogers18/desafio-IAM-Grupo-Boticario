@@ -20,7 +20,7 @@ jobs:
 
     - name: Copy files to EC2
       run: |
-        rsync -avz --exclude='node_modules' --exclude='.git' -e "ssh -o StrictHostKeyChecking=no" . ubuntu@your-ec2-public-ip:/home/ubuntu/app
+        rsync -avz --exclude='node_modules' --exclude='.git' -e "ssh -o StrictHostKeyChecking=no" . ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/app
 
     - name: Set environment variables
       env:
