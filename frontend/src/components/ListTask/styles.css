@@ -17,8 +17,13 @@
   color: var(--first-color-text);
   font-size: 15px;
   font-weight: 600;
-  text-transform: capitalize;
+  text-transform: lowercase;
   text-align: start;
+}
+
+.list-task .text-content .description-task::first-letter,
+.list-task .text-content .title-task::first-letter {
+  text-transform: uppercase;
 }
 
 .list-task .no-data-label {

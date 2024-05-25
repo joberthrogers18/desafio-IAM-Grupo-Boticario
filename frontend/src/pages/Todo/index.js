@@ -13,6 +13,7 @@ function Todo() {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
+  const [taskEdition, setTaskEdition] = useState(null);
   const toast = useRef(null);
 
   const fetchData = useCallback(async () => {
@@ -59,6 +60,11 @@ function Todo() {
     });
   }
 
+  function enableEditionTask(itemTask) {
+    setTaskEdition(itemTask);
+    setVisible(true);
+  }
+
   return (
     <div className="todo-wrapper w-full flex justify-content-center align-items-center p-3">
       <div className="content-todo">
@@ -80,6 +86,7 @@ function Todo() {
               reloadData={fetchData}
               feedbackCreation={feedbackCreationTask}
               signLoadingData={setLoading}
+              setTaskEnableEdit={enableEditionTask}
             />
           </TabPanel>
           <TabPanel header="Concluídas" leftIcon="pi pi-list-check mr-2">
@@ -90,6 +97,7 @@ function Todo() {
               reloadData={fetchData}
               feedbackCreation={feedbackCreationTask}
               signLoadingData={setLoading}
+              setTaskEnableEdit={enableEditionTask}
             />
           </TabPanel>
         </TabView>
@@ -99,6 +107,8 @@ function Todo() {
         onChangeVisible={setVisible}
         reloadData={fetchData}
         feedbackCreation={feedbackCreationTask}
+        taskEdition={taskEdition}
+        setTaskEdition={setTaskEdition}
       />
       <Toast ref={toast} />
     </div>

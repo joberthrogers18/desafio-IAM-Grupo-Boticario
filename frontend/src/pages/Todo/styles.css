@@ -27,6 +27,10 @@
   align-items: center;
 }
 
+.p-tabview .p-tabview-panels {
+  background-color: var(--sub-background-color);
+}
+
 @media (min-width: 768px) {
   .p-tabview .p-tabview-panels {
     overflow: scroll;

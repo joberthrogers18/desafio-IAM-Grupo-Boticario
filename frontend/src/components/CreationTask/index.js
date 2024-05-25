@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -11,10 +11,17 @@ function CreationTask({
   onChangeVisible,
   reloadData,
   feedbackCreation,
+  taskEdition,
+  setTaskEdition,
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loadingCreation, setLoadingCreation] = useState("");
+
+  useMemo(() => {
+    setTitle((taskEdition && taskEdition.title) || "");
+    setDescription((taskEdition && taskEdition.description) || "");
+  }, [taskEdition]);
 
   function cleanFields() {
     setTitle("");
@@ -56,14 +63,56 @@ function CreationTask({
     }
   }
 
+  async function requestEditTask(task) {
+    try {
+      setLoadingCreation(true);
+      const body = {
+        id: task.id,
+        tarefa: {
+          titulo: title,
+          descricao: description,
+          estaCompleto: task.isComplete,
+        },
+      };
+
+      const response = await fetch("http://localhost:3000/tarefa", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const responseParseJson = await response.json();
+
+      feedbackCreation("Sucesso", responseParseJson.message, "success");
+      setTaskEdition(null);
+      cleanFields();
+      onChangeVisible(false);
+      reloadData();
+    } catch (e) {
+      console.log("Error in update task: ", e);
+      feedbackCreation(
+        "Erro",
+        "Nao foi possível atualizar a tarefa. Tente novamente mais tarde",
+        "error"
+      );
+    } finally {
+      setLoadingCreation(false);
+    }
+  }
+
   return (
     <div className="create-task">
       <Dialog
-        header="Criar tarefa"
+        header={taskEdition ? "Editar Tarefa" : "Criar Tarefa"}
         visible={visible}
         style={{ width: "500px" }}
         onHide={() => {
           if (!visible) return;
+          setTitle("");
+          setDescription("");
+          setTaskEdition(null);
           onChangeVisible(false);
         }}
       >
@@ -91,7 +140,9 @@ function CreationTask({
           className="w-full"
           loading={loadingCreation}
           disabled={title === "" || description === ""}
-          onClick={() => requestCreateTask()}
+          onClick={() =>
+            taskEdition ? requestEditTask(taskEdition) : requestCreateTask()
+          }
         />
       </Dialog>
     </div>

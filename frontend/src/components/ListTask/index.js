@@ -43,6 +43,7 @@ function ListTask({
   reloadData,
   feedbackCreation,
   signLoadingData,
+  setTaskEnableEdit,
 }) {
   const [filterTasks, setFilterTasks] = useState([]);
 
@@ -144,6 +145,7 @@ function ListTask({
                       className="ml-2"
                       tooltip="Editar"
                       tooltipOptions={{ position: "top" }}
+                      onClick={() => setTaskEnableEdit(taskItem)}
                     />
                   </div>
                   <div className="description-task">{taskItem.description}</div>
