@@ -5,6 +5,9 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 
 import "./styles.css";
+import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
+import { StatusCode } from "../../contants/StatusCode";
+import { BodyPostTaskDto } from "../../dtos/BodyPostTaskDto";
 
 function CreationTask({
   visible,
@@ -31,11 +34,7 @@ function CreationTask({
   async function requestCreateTask() {
     try {
       setLoadingCreation(true);
-      const body = {
-        titulo: title,
-        descricao: description,
-        estaCompleto: false,
-      };
+      const body = new BodyPostTaskDto(title, description, false);
 
       const response = await fetch("http://localhost:3000/tarefa", {
         method: "POST",
@@ -66,14 +65,12 @@ function CreationTask({
   async function requestEditTask(task) {
     try {
       setLoadingCreation(true);
-      const body = {
-        id: task.id,
-        tarefa: {
-          titulo: title,
-          descricao: description,
-          estaCompleto: task.isComplete,
-        },
-      };
+      const body = new BodyUpdateTaskDto(
+        task.id,
+        title,
+        description,
+        task.isComplete
+      );
 
       const response = await fetch("http://localhost:3000/tarefa", {
         method: "PUT",
@@ -84,6 +81,14 @@ function CreationTask({
       });
 
       const responseParseJson = await response.json();
+
+      if (
+        "statusCode" in responseParseJson &&
+        responseParseJson.statusCode === StatusCode.BAD_REQUEST
+      ) {
+        feedbackCreation("Error", responseParseJson.message, "error");
+        return;
+      }
 
       feedbackCreation("Sucesso", responseParseJson.message, "success");
       setTaskEdition(null);

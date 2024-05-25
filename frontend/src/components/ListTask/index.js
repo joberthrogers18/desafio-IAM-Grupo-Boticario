@@ -6,6 +6,8 @@ import { ConfirmPopup } from "primereact/confirmpopup";
 import { confirmPopup } from "primereact/confirmpopup";
 
 import "./styles.css";
+import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
+import { StatusCode } from "../../contants/StatusCode";
 
 function renderScreenFinalRequisitionState(loading) {
   return loading ? (
@@ -54,22 +56,30 @@ function ListTask({
   async function updateStateCompletionTask(task) {
     try {
       signLoadingData(true);
-      const body = {
-        id: task.id,
-        tarefa: {
-          titulo: task.title,
-          descricao: task.description,
-          estaCompleto: !task.isComplete,
-        },
-      };
+      const body = new BodyUpdateTaskDto(
+        task.id,
+        task.title,
+        task.description,
+        !task.isComplete
+      );
 
-      await fetch("http://localhost:3000/tarefa", {
+      const response = await fetch("http://localhost:3000/tarefa", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
+
+      const responseJson = await response.json();
+
+      if (
+        "statusCode" in responseJson &&
+        responseJson.statusCode === StatusCode.BAD_REQUEST
+      ) {
+        feedbackCreation("Error", responseJson.message, "error");
+        return;
+      }
 
       feedbackCreation("Sucesso", "Tarefa atualizada com sucesso", "success");
       reloadData();

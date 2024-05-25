@@ -57,6 +57,7 @@ function Todo() {
       severity,
       summary: title,
       detail: message,
+      life: 6000,
     });
   }
 
