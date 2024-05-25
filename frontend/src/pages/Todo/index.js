@@ -8,6 +8,7 @@ import ListTask from "../../components/ListTask";
 import "./styles.css";
 import CreationTask from "../../components/CreationTask";
 import { TaskMapDto } from "../../dtos/TaskMapDto";
+import { envVariables } from "../../constants/envVariables";
 
 function Todo() {
   const [visible, setVisible] = useState(false);
@@ -20,7 +21,7 @@ function Todo() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/tarefa");
+      const response = await fetch(`${envVariables.BASE_URL}/tarefa`);
       const responseJson = await response.json();
 
       setTasks(

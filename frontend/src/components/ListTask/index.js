@@ -7,7 +7,8 @@ import { confirmPopup } from "primereact/confirmpopup";
 
 import "./styles.css";
 import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
-import { StatusCode } from "../../contants/StatusCode";
+import { StatusCode } from "../../constants/StatusCode";
+import { envVariables } from "../../constants/envVariables";
 
 function renderScreenFinalRequisitionState(loading) {
   return loading ? (
@@ -63,7 +64,7 @@ function ListTask({
         !task.isComplete
       );
 
-      const response = await fetch("http://localhost:3000/tarefa", {
+      const response = await fetch(`${envVariables.BASE_URL}/tarefa`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +100,7 @@ function ListTask({
     try {
       signLoadingData(true);
 
-      await fetch(`http://localhost:3000/tarefa/${id}`, {
+      await fetch(`${envVariables.BASE_URL}/tarefa/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

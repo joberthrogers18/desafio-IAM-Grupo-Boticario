@@ -6,8 +6,9 @@ import { InputTextarea } from "primereact/inputtextarea";
 
 import "./styles.css";
 import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
-import { StatusCode } from "../../contants/StatusCode";
+import { StatusCode } from "../../constants/StatusCode";
 import { BodyPostTaskDto } from "../../dtos/BodyPostTaskDto";
+import { envVariables } from "../../constants/envVariables";
 
 function CreationTask({
   visible,
@@ -36,7 +37,7 @@ function CreationTask({
       setLoadingCreation(true);
       const body = new BodyPostTaskDto(title, description, false);
 
-      const response = await fetch("http://localhost:3000/tarefa", {
+      const response = await fetch(`${envVariables.BASE_URL}/tarefa`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +73,7 @@ function CreationTask({
         task.isComplete
       );
 
-      const response = await fetch("http://localhost:3000/tarefa", {
+      const response = await fetch(`${envVariables.BASE_URL}/tarefa`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
