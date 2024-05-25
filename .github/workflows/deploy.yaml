@@ -34,7 +34,10 @@ jobs:
 
     - name: Run Docker Compose on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@{{ secrets.EC2_HOST }} << 'EOF'
+          sudo systemctl start docker
+          sudo usermod -aG docker $(whoami)
+          newgrp docker
           cd /home/ubuntu/app
           docker-compose down
           docker-compose pull
