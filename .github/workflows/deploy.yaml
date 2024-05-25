@@ -27,9 +27,9 @@ jobs:
         API_URL: ${{ secrets.API_URL }}
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-          echo "export API_URL=${API_URL}" >> /home/ubuntu/.bashrc
-          echo "API_URL=${API_URL}" > /home/ubuntu/.env
-          source /home/ubuntu/.bashrc
+          sudo echo "export API_URL=${API_URL}" >> /home/ubuntu/.bashrc
+          sudo echo "API_URL=${API_URL}" > /home/ubuntu/.env
+          sudo source /home/ubuntu/.bashrc
         EOF
 
     - name: Run Docker Compose on EC2
