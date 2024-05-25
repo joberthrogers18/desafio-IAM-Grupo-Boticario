@@ -22,16 +22,6 @@ jobs:
       run: |
         rsync -avz --exclude='node_modules' --exclude='.git' -e "ssh -o StrictHostKeyChecking=no" . ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
 
-    - name: Set environment variables
-      env:
-        API_URL: ${{ secrets.API_URL }}
-      run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-          sudo echo "export API_URL=${API_URL}" >> /home/ubuntu/.bashrc
-          sudo echo "API_URL=${API_URL}" > /home/ubuntu/.env
-          sudo source /home/ubuntu/.bashrc
-        EOF
-
     - name: Run Docker Compose on EC2
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
