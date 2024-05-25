@@ -70,7 +70,14 @@ function Todo() {
           <p className="btn-label m-0">Adicionar Tarefa</p>
           <i className="ml-3 pi pi-plus-circle"></i>
         </Button>
-        <ListTask tasks={tasks} loading={loading} isTaskCompleted={false} />
+        <ListTask
+          tasks={tasks}
+          loading={loading}
+          isTaskCompleted={false}
+          reloadData={fetchData}
+          feedbackCreation={feedbackCreationTask}
+          signLoadingData={setLoading}
+        />
       </div>
       <CreationTask
         visible={visible}
