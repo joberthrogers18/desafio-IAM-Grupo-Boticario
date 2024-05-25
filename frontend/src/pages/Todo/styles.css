@@ -15,3 +15,21 @@
   color: var(--primary-text-color);
   font-weight: 700;
 }
+
+.p-tabview .p-tabview-nav li {
+  width: 100%;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .p-tabview .p-tabview-panels {
+    overflow: scroll;
+    height: 50vh;
+  }
+}

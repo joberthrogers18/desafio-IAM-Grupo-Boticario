@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
+import { TabView, TabPanel } from "primereact/tabview";
 
 import AlertInfo from "../../components/AlertInfo";
 import ListTask from "../../components/ListTask";
@@ -65,19 +66,33 @@ function Todo() {
         <Button
           disabled={loading}
           onClick={() => setVisible(true)}
-          className="w-full mt-5 mb-5 flex justify-content-center"
+          className="w-full mt-3 flex justify-content-center"
         >
           <p className="btn-label m-0">Adicionar Tarefa</p>
-          <i className="ml-3 pi pi-plus-circle"></i>
+          <i className="ml-3 pi pi-list"></i>
         </Button>
-        <ListTask
-          tasks={tasks}
-          loading={loading}
-          isTaskCompleted={false}
-          reloadData={fetchData}
-          feedbackCreation={feedbackCreationTask}
-          signLoadingData={setLoading}
-        />
+        <TabView className="tab-view mt-2">
+          <TabPanel header="Pendentes" leftIcon="pi pi-calendar mr-2">
+            <ListTask
+              tasks={tasks}
+              loading={loading}
+              isTaskCompleted={false}
+              reloadData={fetchData}
+              feedbackCreation={feedbackCreationTask}
+              signLoadingData={setLoading}
+            />
+          </TabPanel>
+          <TabPanel header="Concluídas" leftIcon="pi pi-list-check mr-2">
+            <ListTask
+              tasks={tasks}
+              loading={loading}
+              isTaskCompleted={true}
+              reloadData={fetchData}
+              feedbackCreation={feedbackCreationTask}
+              signLoadingData={setLoading}
+            />
+          </TabPanel>
+        </TabView>
       </div>
       <CreationTask
         visible={visible}
