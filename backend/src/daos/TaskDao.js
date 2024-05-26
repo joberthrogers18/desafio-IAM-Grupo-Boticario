@@ -12,8 +12,8 @@ class TaskDao {
     return await Task.findAll({
       where: {
         [key]: value,
-        order: [["modifiedDate", "DESC"]],
       },
+      order: [["modifiedDate", "DESC"]],
     });
   }
 

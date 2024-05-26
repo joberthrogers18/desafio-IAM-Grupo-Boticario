@@ -1,3 +1,5 @@
+const validator = require("validator");
+
 const StatusCode = require("../constants/StatusCode");
 const ResponseDTO = require("../dtos/ResponseDTO");
 const ResponseErrorDTO = require("../dtos/ResponseErrorDTO");
@@ -27,17 +29,14 @@ class TaskController {
 
   async getTaskById(request, reply) {
     try {
-      const id =
-        request.params && request.params.hasOwnProperty("id")
-          ? request.params.id
-          : null;
+      const id = request.params && request.params.id ? request.params.id : null;
 
-      if (!id) {
+      if (!id || !validator.isHexadecimal(id)) {
         return reply
           .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
-              "O id não pode ser nulo",
+              "O id fornecido é inválido",
               StatusCode.BAD_REQUEST
             ).buildResponseObject()
           );
@@ -55,7 +54,7 @@ class TaskController {
           .status(StatusCode.NOT_FOUND)
           .send(
             new ResponseErrorDTO(
-              "Tarefa não encontrada. Forneça um numero de id valido",
+              "Tarefa não encontrada. Forneça um número de id válido",
               StatusCode.NOT_FOUND
             ).buildResponseObject()
           );
@@ -75,10 +74,8 @@ class TaskController {
   async getAllByCompletion(request, reply) {
     try {
       const isComplete =
-        request.query &&
-        Object.keys(request.query).length > 0 &&
-        Object.keys(request.query).includes("estaCompleto")
-          ? request.query.estaCompleto === "true"
+        request.query && request.query.estaCompleto
+          ? validator.toBoolean(request.query.estaCompleto)
           : false;
 
       const tasks = await TaskService.getTaskByCompletion(isComplete);
@@ -105,9 +102,9 @@ class TaskController {
 
       if (
         !taskBody ||
-        !taskBody.hasOwnProperty("titulo") ||
-        !taskBody.hasOwnProperty("descricao") ||
-        !taskBody.hasOwnProperty("estaCompleto")
+        !taskBody.titulo ||
+        !taskBody.descricao ||
+        taskBody.estaCompleto === undefined
       ) {
         return reply
           .status(StatusCode.BAD_REQUEST)
@@ -119,10 +116,25 @@ class TaskController {
           );
       }
 
+      if (
+        !validator.isLength(taskBody.titulo, { min: 1 }) ||
+        !validator.isLength(taskBody.descricao, { min: 1 }) ||
+        !validator.isBoolean(taskBody.estaCompleto.toString())
+      ) {
+        return reply
+          .status(StatusCode.BAD_REQUEST)
+          .send(
+            new ResponseErrorDTO(
+              "Os campos 'titulo' e 'descricao' devem ter pelo menos 1 caractere e 'estaCompleto' deve ser um booleano",
+              StatusCode.BAD_REQUEST
+            ).buildResponseObject()
+          );
+      }
+
       const body = {
         title: taskBody.titulo,
         description: taskBody.descricao,
-        isCompleted: taskBody.estaCompleto,
+        isCompleted: validator.toBoolean(taskBody.estaCompleto.toString()),
       };
 
       const createdTask = await TaskService.createTask(body);
@@ -150,22 +162,16 @@ class TaskController {
 
   async putTaskObject(request, reply) {
     try {
-      const id =
-        request.body && request.body.hasOwnProperty("id")
-          ? request.body.id
-          : null;
-
+      const id = request.body && request.body.id ? request.body.id : null;
       const taskBody =
-        request.body && request.body.hasOwnProperty("tarefa")
-          ? request.body.tarefa
-          : null;
+        request.body && request.body.tarefa ? request.body.tarefa : null;
 
-      if (!id || !taskBody) {
+      if (!id || !validator.isHexadecimal(id)) {
         return reply
           .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
-              "Os campos 'id' e 'tarefa' não podem ser nulos",
+              "O campo 'id' é inválido",
               StatusCode.BAD_REQUEST
             ).buildResponseObject()
           );
@@ -173,9 +179,9 @@ class TaskController {
 
       if (
         !taskBody ||
-        !taskBody.hasOwnProperty("titulo") ||
-        !taskBody.hasOwnProperty("descricao") ||
-        !taskBody.hasOwnProperty("estaCompleto")
+        !taskBody.titulo ||
+        !taskBody.descricao ||
+        taskBody.estaCompleto === undefined
       ) {
         return reply
           .status(StatusCode.BAD_REQUEST)
@@ -187,16 +193,31 @@ class TaskController {
           );
       }
 
+      if (
+        !validator.isLength(taskBody.titulo, { min: 1 }) ||
+        !validator.isLength(taskBody.descricao, { min: 1 }) ||
+        !validator.isBoolean(taskBody.estaCompleto.toString())
+      ) {
+        return reply
+          .status(StatusCode.BAD_REQUEST)
+          .send(
+            new ResponseErrorDTO(
+              "Os campos 'titulo' e 'descricao' devem ter pelo menos 1 caractere e 'estaCompleto' deve ser um booleano",
+              StatusCode.BAD_REQUEST
+            ).buildResponseObject()
+          );
+      }
+
       const body = {
         id,
         title: taskBody.titulo,
         description: taskBody.descricao,
-        isCompleted: taskBody.estaCompleto,
+        isCompleted: validator.toBoolean(taskBody.estaCompleto.toString()),
       };
 
       const updatedTask = await TaskService.updateTask(id, body);
       return reply
-        .code(StatusCode.SUCCESS)
+        .status(StatusCode.SUCCESS)
         .send(
           new ResponseDTO(
             updatedTask,
@@ -211,7 +232,7 @@ class TaskController {
           .status(StatusCode.NOT_FOUND)
           .send(
             new ResponseErrorDTO(
-              "Tarefa não encontrada. Forneça um numero de id valido",
+              "Tarefa não encontrada. Forneça um número de id válido",
               StatusCode.NOT_FOUND
             ).buildResponseObject()
           );
@@ -220,7 +241,7 @@ class TaskController {
           .status(StatusCode.INTERNAL_SERVER_ERROR)
           .send(
             new ResponseErrorDTO(
-              "Não foi possível criar a tarefa. Por favor tente novamente mais tarde",
+              "Não foi possível atualizar a tarefa. Por favor tente novamente mais tarde",
               StatusCode.INTERNAL_SERVER_ERROR
             ).buildResponseObject()
           );
@@ -230,14 +251,22 @@ class TaskController {
 
   async deleteTaskObject(request, reply) {
     try {
-      const id =
-        request.params && request.params.hasOwnProperty("id")
-          ? request.params.id
-          : null;
+      const id = request.params && request.params.id ? request.params.id : null;
+
+      if (!id || !validator.isHexadecimal(id)) {
+        return reply
+          .status(StatusCode.BAD_REQUEST)
+          .send(
+            new ResponseErrorDTO(
+              "O id fornecido é inválido",
+              StatusCode.BAD_REQUEST
+            ).buildResponseObject()
+          );
+      }
 
       await TaskService.deleteTask(id);
       return reply
-        .code(StatusCode.SUCCESS)
+        .status(StatusCode.SUCCESS)
         .send(
           new ResponseDTO(
             null,
@@ -252,7 +281,7 @@ class TaskController {
           .status(StatusCode.NOT_FOUND)
           .send(
             new ResponseErrorDTO(
-              "Tarefa não encontrado. Forneça um numero de id valido",
+              "Tarefa não encontrada. Forneça um número de id válido",
               StatusCode.NOT_FOUND
             ).buildResponseObject()
           );
@@ -261,7 +290,7 @@ class TaskController {
           .status(StatusCode.INTERNAL_SERVER_ERROR)
           .send(
             new ResponseErrorDTO(
-              "Não foi possível criar a tarefa. Por favor tente novamente mais tarde",
+              "Não foi possível deletar a tarefa. Por favor tente novamente mais tarde",
               StatusCode.INTERNAL_SERVER_ERROR
             ).buildResponseObject()
           );
