@@ -3,23 +3,19 @@ const Label = require("../models/LabelModel");
 const NotFoundException = require("../exceptions/NotFoundException");
 
 class TaskDao {
-  async findAll() {
-    return await Task.findAll({
-      order: [["modifiedDate", "DESC"]],
-      include: [
-        {
-          model: Label,
-          attributes: ["name"],
-        },
-      ],
-    });
-  }
+  async findAll(filters) {
+    const where = {};
 
-  async findByKey(key, value) {
+    if (filters.isCompleted !== null) {
+      where.isCompleted = filters.isCompleted;
+    }
+
+    if (filters.LabelId) {
+      where.LabelId = filters.LabelId;
+    }
+
     return await Task.findAll({
-      where: {
-        [key]: value,
-      },
+      where,
       order: [["modifiedDate", "DESC"]],
       include: [
         {

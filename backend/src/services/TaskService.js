@@ -4,8 +4,8 @@ const { adjustToBrazilTimezone } = require("../utils/dataHourManipulation");
 const { generateHash } = require("../utils/encryption");
 
 class TaskService {
-  async getAllTasks() {
-    const tasks = await TaskDao.findAll();
+  async getAllTasks(filters) {
+    const tasks = await TaskDao.findAll(filters);
     return tasks.map(
       (task) =>
         new TaskDto(
@@ -32,23 +32,6 @@ class TaskService {
       task.modifiedDate,
       task.LabelId,
       task.Label.name
-    );
-  }
-
-  async getTaskByCompletion(isCompleted) {
-    const tasks = await TaskDao.findByKey("isCompleted", isCompleted);
-    return tasks.map(
-      (task) =>
-        new TaskDto(
-          task.id,
-          task.title,
-          task.description,
-          task.isCompleted,
-          task.creationDate,
-          task.modifiedDate,
-          task.LabelId,
-          task.Label.name
-        )
     );
   }
 

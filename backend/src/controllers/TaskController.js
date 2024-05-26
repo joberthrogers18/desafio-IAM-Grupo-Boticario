@@ -9,7 +9,15 @@ const TaskService = require("../services/TaskService");
 class TaskController {
   async getAllTask(request, reply) {
     try {
-      const tasks = await TaskService.getAllTasks();
+      const filters = {
+        isCompleted:
+          request.query && request.query.estaCompleta !== undefined
+            ? validator.toBoolean(request.query.estaCompleta)
+            : null,
+        LabelId: request.query.idEtiqueta,
+      };
+
+      const tasks = await TaskService.getAllTasks(filters);
       return reply
         .status(StatusCode.SUCCESS)
         .send(new ResponseDTO(tasks, "").buildResponseObject());
@@ -68,31 +76,6 @@ class TaskController {
             ).buildResponseObject()
           );
       }
-    }
-  }
-
-  async getAllByCompletion(request, reply) {
-    try {
-      const isComplete =
-        request.query && request.query.estaCompleto
-          ? validator.toBoolean(request.query.estaCompleto)
-          : false;
-
-      const tasks = await TaskService.getTaskByCompletion(isComplete);
-      return reply
-        .status(StatusCode.SUCCESS)
-        .send(new ResponseDTO(tasks, "").buildResponseObject());
-    } catch (error) {
-      console.log("error: ", error);
-
-      return reply
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send(
-          new ResponseErrorDTO(
-            "Não foi possível recuperar as tarefas listadas. Por favor tente novamente mais tarde",
-            StatusCode.INTERNAL_SERVER_ERROR
-          ).buildResponseObject()
-        );
     }
   }
 
