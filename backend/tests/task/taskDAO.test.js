@@ -21,14 +21,7 @@ describe("TaskDao", () => {
 
   it("should find all tasks", async () => {
     Task.findAll.mockResolvedValue([mockTask]);
-    const tasks = await TaskDao.findAll();
-    expect(Task.findAll).toHaveBeenCalledTimes(1);
-    expect(tasks).toEqual([mockTask]);
-  });
-
-  it("should find all by key searched", async () => {
-    Task.findAll.mockResolvedValue([mockTask]);
-    const tasks = await TaskDao.findByKey("isCompleted", true);
+    const tasks = await TaskDao.findAll({ LabelId: 1 });
     expect(Task.findAll).toHaveBeenCalledTimes(1);
     expect(tasks).toEqual([mockTask]);
   });

@@ -130,47 +130,6 @@ describe("Task Controller", () => {
     });
   });
 
-  describe("getAllByCompletion", () => {
-    it("should get task by completion and return response with status 200", async () => {
-      const mockTasks = [
-        {
-          id: hashIdMock,
-          titulo: "Titulo da tarefa",
-          descricao: "Descrição da tarefa",
-          estaCompleto: true,
-        },
-      ];
-      request.params.id = hashIdMock;
-      TaskService.getTaskByCompletion.mockResolvedValue(mockTasks);
-
-      await TaskController.getAllByCompletion(request, reply);
-
-      expect(TaskService.getTaskByCompletion).toHaveBeenCalled();
-      expect(reply.send).toHaveBeenCalledWith(
-        new ResponseDTO(mockTasks, "").buildResponseObject()
-      );
-    });
-
-    it("should return 500 if there is an error", async () => {
-      request.query.estaCompleto = false;
-      TaskService.getTaskByCompletion.mockRejectedValue(
-        new Error("Erro na banco de dados")
-      );
-
-      await TaskController.getAllByCompletion(request, reply);
-
-      expect(reply.status).toHaveBeenCalledWith(
-        StatusCode.INTERNAL_SERVER_ERROR
-      );
-      expect(reply.send).toHaveBeenCalledWith(
-        new ResponseErrorDTO(
-          "Não foi possível recuperar as tarefas listadas. Por favor tente novamente mais tarde",
-          StatusCode.INTERNAL_SERVER_ERROR
-        ).buildResponseObject()
-      );
-    });
-  });
-
   describe("postTaskObject", () => {
     it("should create a new task and return response with status 201", async () => {
       const taskBody = {
