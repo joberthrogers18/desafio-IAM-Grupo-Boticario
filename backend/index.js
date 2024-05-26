@@ -10,7 +10,6 @@ const start = async () => {
 
     fastify.register(cors, {});
 
-    // Task.sync();
     await syncModels();
     await populateLabels();
 

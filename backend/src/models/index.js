@@ -1,15 +1,16 @@
 const sequelizeInst = require("../config/configDatabase");
-// const { DataTypes } = require("sequelize");
 
 const Task = require("../models/TaskModel");
 const Label = require("../models/LabelModel");
-
-Task.associate({ Label });
-Label.associate({ Task });
+const User = require("../models/UserModel");
 
 async function syncModels() {
+  Task.associate({ Label, User });
+  User.associate({ Task });
+  Label.associate({ Task });
+
   await sequelizeInst.sync({ force: true });
-  console.log("Database & tables created!");
+  console.log("Base de dados criada com sucesso");
 }
 
 async function populateLabels() {
@@ -19,7 +20,7 @@ async function populateLabels() {
     await Label.create(label);
   }
 
-  console.log("Labels populated!");
+  console.log("Etiquetas populadas!");
 }
 
 module.exports = { syncModels, populateLabels, Task, Label };

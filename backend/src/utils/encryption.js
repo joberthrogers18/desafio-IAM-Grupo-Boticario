@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 
 function generateHash() {
   const hash = crypto.createHash("sha256");
@@ -6,4 +7,13 @@ function generateHash() {
   return hash.digest("hex");
 }
 
-module.exports = { generateHash };
+const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+};
+
+const verifyPassword = async (password, hashedPassword) => {
+  return bcrypt.compare(password, hashedPassword);
+};
+
+module.exports = { generateHash, hashPassword, verifyPassword };

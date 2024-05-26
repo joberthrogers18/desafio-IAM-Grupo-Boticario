@@ -53,10 +53,12 @@ class TaskDao {
     return updatedTask;
   }
 
-  async delete(id, task) {
-    const taskData = await this.findById(id);
-    await taskData.destroy(task);
-    return taskData;
+  async delete(id) {
+    await Task.destroy({
+      where: {
+        id,
+      },
+    });
   }
 }
 

@@ -43,6 +43,12 @@ Task.associate = (models) => {
       allowNull: false,
     },
   });
+
+  Task.belongsTo(models.User, {
+    foreignKey: {
+      allowNull: false,
+    },
+  });
 };
 
 module.exports = Task;
