@@ -21,12 +21,25 @@ describe("Task Service", () => {
         title: "Titulo da minha tarefa 1",
         description: "Descrição da minha tarefa 1",
         isCompleted: false,
+        creationDate: "12-05-2023",
+        modifiedDate: "12-05-2024",
+        isCompleted: false,
+        LabelId: 1,
+        Label: {
+          name: "Alta",
+        },
       },
       {
         id: hashIdsMock[1],
         title: "Titulo da minha tarefa 2",
         description: "Descrição da minha tarefa 2",
         isCompleted: true,
+        creationDate: "12-05-2023",
+        modifiedDate: "12-05-2024",
+        LabelId: 2,
+        Label: {
+          name: "Media",
+        },
       },
     ];
     TaskDao.findAll.mockResolvedValue(mockTasks);
@@ -39,13 +52,21 @@ describe("Task Service", () => {
         hashIdsMock[0],
         "Titulo da minha tarefa 1",
         "Descrição da minha tarefa 1",
-        false
+        false,
+        "12-05-2023",
+        "12-05-2024",
+        1,
+        "Alta"
       ),
       new TaskDto(
         hashIdsMock[1],
         "Titulo da minha tarefa 2",
         "Descrição da minha tarefa 2",
-        true
+        true,
+        "12-05-2023",
+        "12-05-2024",
+        2,
+        "Media"
       ),
     ]);
   });
@@ -55,7 +76,13 @@ describe("Task Service", () => {
       id: hashIdsMock[0],
       title: "Titulo da minha tarefa 1",
       description: "Descrição da minha tarefa 1",
+      creationDate: "12-05-2023",
+      modifiedDate: "12-05-2024",
       isCompleted: false,
+      LabelId: 1,
+      Label: {
+        name: "Alta",
+      },
     };
 
     TaskDao.findById.mockResolvedValue(mockTasks);
@@ -67,7 +94,11 @@ describe("Task Service", () => {
         hashIdsMock[0],
         "Titulo da minha tarefa 1",
         "Descrição da minha tarefa 1",
-        false
+        false,
+        "12-05-2023",
+        "12-05-2024",
+        1,
+        "Alta"
       )
     );
   });
@@ -79,6 +110,12 @@ describe("Task Service", () => {
         title: "Titulo da minha tarefa 1",
         description: "Descrição da minha tarefa 1",
         isCompleted: false,
+        LabelId: 1,
+        creationDate: "12-05-2016",
+        modifiedDate: "12-05-2015",
+        Label: {
+          name: "Alta",
+        },
       },
     ];
 
@@ -91,7 +128,11 @@ describe("Task Service", () => {
         hashIdsMock[0],
         "Titulo da minha tarefa 1",
         "Descrição da minha tarefa 1",
-        false
+        false,
+        "12-05-2016",
+        "12-05-2015",
+        1,
+        "Alta"
       ),
     ]);
   });

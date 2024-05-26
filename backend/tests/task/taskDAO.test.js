@@ -36,7 +36,7 @@ describe("TaskDao", () => {
   it("should find a task by id", async () => {
     Task.findByPk.mockResolvedValue(mockTask);
     const task = await TaskDao.findById(hashIdMock);
-    expect(Task.findByPk).toHaveBeenCalledWith(hashIdMock);
+    expect(Task.findByPk).toHaveBeenCalledWith(hashIdMock, expect.anything());
     expect(task).toEqual(mockTask);
   });
 
@@ -60,7 +60,7 @@ describe("TaskDao", () => {
 
     const updatedTask = await TaskDao.update(hashIdMock, updatedMockTask);
 
-    expect(Task.findByPk).toHaveBeenCalledWith(hashIdMock);
+    expect(Task.findByPk).toHaveBeenCalledWith(hashIdMock, expect.anything());
     expect(mockTask.update).toHaveBeenCalledWith(updatedMockTask);
     expect(updatedTask).toEqual(mockTask);
   });
@@ -85,7 +85,7 @@ describe("TaskDao", () => {
 
     const deletedTask = await TaskDao.delete(1);
 
-    expect(Task.findByPk).toHaveBeenCalledWith(1);
+    expect(Task.findByPk).toHaveBeenCalledWith(1, expect.anything());
     expect(mockTask.destroy).toHaveBeenCalled();
     expect(deletedTask).toEqual(mockTask);
   });

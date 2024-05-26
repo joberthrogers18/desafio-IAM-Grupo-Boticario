@@ -177,6 +177,7 @@ describe("Task Controller", () => {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: false,
+        idEtiqueta: 1,
       };
       request.body = taskBody;
       const mockTask = { id: 1, ...taskBody };
@@ -214,6 +215,27 @@ describe("Task Controller", () => {
       );
     });
 
+    it("should return bad request when labelId is empty", async () => {
+      const taskBody = {
+        titulo: "Titulo",
+        descricao: "Descrição da tarefa",
+        estaCompleto: false,
+      };
+      request.body = taskBody;
+      const mockTask = { id: hashIdMock, ...taskBody, labelId: 1 };
+      TaskService.createTask.mockResolvedValue(mockTask);
+
+      await TaskController.postTaskObject(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "A tarefa deve estar vinculada a uma etiqueta. o campo 'idEtiqueta' não pode ser nulo",
+          StatusCode.BAD_REQUEST
+        ).buildResponseObject()
+      );
+    });
+
     it("should return 400 if request body is invalid", async () => {
       request.body = { titulo: "Novo Titulo" };
 
@@ -233,6 +255,7 @@ describe("Task Controller", () => {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: false,
+        idEtiqueta: 1,
       };
       request.body = taskBody;
       TaskService.createTask.mockRejectedValue(new Error("Database Error"));
@@ -257,6 +280,7 @@ describe("Task Controller", () => {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
+        idEtiqueta: 1,
       };
       request.body = { id: hashIdMock, tarefa: taskBody };
       const mockTask = { ...taskBody };
@@ -294,6 +318,27 @@ describe("Task Controller", () => {
       );
     });
 
+    it("should return bad request when labelId is empty", async () => {
+      const taskBody = {
+        titulo: "Titulo",
+        descricao: "Descrição da tarefa",
+        estaCompleto: true,
+      };
+      request.body = { id: hashIdMock, tarefa: taskBody };
+      const mockTask = { ...taskBody };
+      TaskService.updateTask.mockResolvedValue(mockTask);
+
+      await TaskController.putTaskObject(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "A tarefa deve estar vinculada a uma etiqueta. o campo 'idEtiqueta' não pode ser nulo",
+          StatusCode.BAD_REQUEST
+        ).buildResponseObject()
+      );
+    });
+
     it("should return 400 if request body is invalid", async () => {
       request.body = { tarefa: { titulo: "Tarefa atualizada" } };
 
@@ -313,6 +358,7 @@ describe("Task Controller", () => {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
+        idEtiqueta: 1,
       };
       request.body = { id: hashIdMock, tarefa: taskBody };
       TaskService.updateTask.mockRejectedValue(
@@ -335,6 +381,7 @@ describe("Task Controller", () => {
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
+        idEtiqueta: 1,
       };
       request.body = { id: hashIdMock, tarefa: taskBody };
       TaskService.updateTask.mockRejectedValue(new Error("Database Error"));

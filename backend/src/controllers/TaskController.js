@@ -117,13 +117,16 @@ class TaskController {
           );
       }
 
-      if (!taskBody.idEtiqueta && !validator.isInt(taskBody.idEtiqueta)) {
+      if (
+        !taskBody.idEtiqueta &&
+        !validator.isInt(String(taskBody.idEtiqueta))
+      ) {
         return reply
-          .status(StatusCode.NOT_FOUND)
+          .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
               "A tarefa deve estar vinculada a uma etiqueta. o campo 'idEtiqueta' não pode ser nulo",
-              StatusCode.NOT_FOUND
+              StatusCode.BAD_REQUEST
             ).buildResponseObject()
           );
       }
@@ -145,7 +148,7 @@ class TaskController {
           ).buildResponseObject()
         );
     } catch (error) {
-      console.log("error: ", error);
+      console.log("error: aqui", error);
 
       return reply
         .status(StatusCode.INTERNAL_SERVER_ERROR)
@@ -190,13 +193,16 @@ class TaskController {
           );
       }
 
-      if (!taskBody.idEtiqueta && !validator.isInt(taskBody.idEtiqueta)) {
+      if (
+        !taskBody.idEtiqueta &&
+        !validator.isInt(String(taskBody.idEtiqueta))
+      ) {
         return reply
-          .status(StatusCode.NOT_FOUND)
+          .status(StatusCode.BAD_REQUEST)
           .send(
             new ResponseErrorDTO(
               "A tarefa deve estar vinculada a uma etiqueta. o campo 'idEtiqueta' não pode ser nulo",
-              StatusCode.NOT_FOUND
+              StatusCode.BAD_REQUEST
             ).buildResponseObject()
           );
       }
