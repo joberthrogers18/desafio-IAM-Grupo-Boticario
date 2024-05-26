@@ -37,4 +37,12 @@ const Task = sequelizeInst.define("Task", {
   },
 });
 
+Task.associate = (models) => {
+  Task.belongsTo(models.Label, {
+    foreignKey: {
+      allowNull: false,
+    },
+  });
+};
+
 module.exports = Task;

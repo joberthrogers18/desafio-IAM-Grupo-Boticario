@@ -2,6 +2,7 @@ const Task = require("./src/models/TaskModel");
 const applyRoutes = require("./src/routes");
 const fastify = require("fastify")({ logger: true });
 const cors = require("@fastify/cors");
+const { syncModels, populateLabels } = require("./src/models");
 
 const start = async () => {
   try {
@@ -9,7 +10,9 @@ const start = async () => {
 
     fastify.register(cors, {});
 
-    Task.sync();
+    // Task.sync();
+    await syncModels();
+    await populateLabels();
 
     applyRoutes(fastify);
 
