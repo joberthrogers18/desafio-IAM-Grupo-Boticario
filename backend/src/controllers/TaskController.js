@@ -101,22 +101,8 @@ class TaskController {
       const taskBody = request.body;
 
       if (
-        !taskBody ||
         !taskBody.titulo ||
         !taskBody.descricao ||
-        taskBody.estaCompleto === undefined
-      ) {
-        return reply
-          .status(StatusCode.BAD_REQUEST)
-          .send(
-            new ResponseErrorDTO(
-              "Os campos 'titulo', 'descricao' e 'estaCompleto' não podem ser nulos",
-              StatusCode.BAD_REQUEST
-            ).buildResponseObject()
-          );
-      }
-
-      if (
         !validator.isLength(taskBody.titulo, { min: 1 }) ||
         !validator.isLength(taskBody.descricao, { min: 1 }) ||
         !validator.isBoolean(taskBody.estaCompleto.toString())
@@ -172,22 +158,6 @@ class TaskController {
           .send(
             new ResponseErrorDTO(
               "O campo 'id' é inválido",
-              StatusCode.BAD_REQUEST
-            ).buildResponseObject()
-          );
-      }
-
-      if (
-        !taskBody ||
-        !taskBody.titulo ||
-        !taskBody.descricao ||
-        taskBody.estaCompleto === undefined
-      ) {
-        return reply
-          .status(StatusCode.BAD_REQUEST)
-          .send(
-            new ResponseErrorDTO(
-              "Os campos 'titulo', 'descricao' e 'estaCompleto' dentro do objeto tarefa não podem ser nulos",
               StatusCode.BAD_REQUEST
             ).buildResponseObject()
           );

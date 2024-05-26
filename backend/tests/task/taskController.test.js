@@ -87,7 +87,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "O id não pode ser nulo",
+          "O id fornecido é inválido",
           StatusCode.BAD_REQUEST
         ).buildResponseObject()
       );
@@ -104,7 +104,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.NOT_FOUND);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Tarefa não encontrada. Forneça um numero de id valido",
+          "Tarefa não encontrada. Forneça um número de id válido",
           StatusCode.NOT_FOUND
         ).buildResponseObject()
       );
@@ -193,6 +193,27 @@ describe("Task Controller", () => {
       );
     });
 
+    it("should return bad request when task title is empty", async () => {
+      const taskBody = {
+        titulo: "",
+        descricao: "Descrição da tarefa",
+        estaCompleto: false,
+      };
+      request.body = taskBody;
+      const mockTask = { id: 1, ...taskBody };
+      TaskService.createTask.mockResolvedValue(mockTask);
+
+      await TaskController.postTaskObject(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "Os campos 'titulo' e 'descricao' devem ter pelo menos 1 caractere e 'estaCompleto' deve ser um booleano",
+          StatusCode.BAD_REQUEST
+        ).buildResponseObject()
+      );
+    });
+
     it("should return 400 if request body is invalid", async () => {
       request.body = { titulo: "Novo Titulo" };
 
@@ -201,7 +222,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Os campos 'titulo', 'descricao' e 'estaCompleto' não podem ser nulos",
+          "Os campos 'titulo' e 'descricao' devem ter pelo menos 1 caractere e 'estaCompleto' deve ser um booleano",
           StatusCode.BAD_REQUEST
         ).buildResponseObject()
       );
@@ -232,24 +253,43 @@ describe("Task Controller", () => {
 
   describe("putTaskObject", () => {
     it("should update a task and return response with status 201", async () => {
-      const id = 1;
       const taskBody = {
-        id,
         titulo: "Titulo da tarefa",
         descricao: "Descrição da tarefa",
         estaCompleto: true,
       };
-      request.body = { id, tarefa: taskBody };
+      request.body = { id: hashIdMock, tarefa: taskBody };
       const mockTask = { ...taskBody };
       TaskService.updateTask.mockResolvedValue(mockTask);
 
       await TaskController.putTaskObject(request, reply);
 
-      expect(reply.code).toHaveBeenCalledWith(StatusCode.SUCCESS);
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.SUCCESS);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseDTO(
           mockTask,
           "Tarefa atualizada com sucesso"
+        ).buildResponseObject()
+      );
+    });
+
+    it("should return bad request when title is empty", async () => {
+      const taskBody = {
+        titulo: "",
+        descricao: "Descrição da tarefa",
+        estaCompleto: true,
+      };
+      request.body = { id: hashIdMock, tarefa: taskBody };
+      const mockTask = { ...taskBody };
+      TaskService.updateTask.mockResolvedValue(mockTask);
+
+      await TaskController.putTaskObject(request, reply);
+
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "Os campos 'titulo' e 'descricao' devem ter pelo menos 1 caractere e 'estaCompleto' deve ser um booleano",
+          StatusCode.BAD_REQUEST
         ).buildResponseObject()
       );
     });
@@ -262,7 +302,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Os campos 'id' e 'tarefa' não podem ser nulos",
+          "O campo 'id' é inválido",
           StatusCode.BAD_REQUEST
         ).buildResponseObject()
       );
@@ -284,7 +324,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.NOT_FOUND);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Tarefa não encontrada. Forneça um numero de id valido",
+          "Tarefa não encontrada. Forneça um número de id válido",
           StatusCode.NOT_FOUND
         ).buildResponseObject()
       );
@@ -306,7 +346,7 @@ describe("Task Controller", () => {
       );
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Não foi possível criar a tarefa. Por favor tente novamente mais tarde",
+          "Não foi possível atualizar a tarefa. Por favor tente novamente mais tarde",
           StatusCode.INTERNAL_SERVER_ERROR
         ).buildResponseObject()
       );
@@ -320,11 +360,26 @@ describe("Task Controller", () => {
       await TaskController.deleteTaskObject(request, reply);
 
       expect(TaskService.deleteTask).toHaveBeenCalledWith(hashIdMock);
-      expect(reply.code).toHaveBeenCalledWith(StatusCode.SUCCESS);
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.SUCCESS);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseDTO(
           null,
           "Tarefa deletada com sucesso"
+        ).buildResponseObject()
+      );
+    });
+
+    it("should return bad request when id is null", async () => {
+      request.params.id = null;
+
+      await TaskController.deleteTaskObject(request, reply);
+
+      expect(TaskService.deleteTask).toHaveBeenCalledWith(hashIdMock);
+      expect(reply.status).toHaveBeenCalledWith(StatusCode.BAD_REQUEST);
+      expect(reply.send).toHaveBeenCalledWith(
+        new ResponseErrorDTO(
+          "O id fornecido é inválido",
+          StatusCode.BAD_REQUEST
         ).buildResponseObject()
       );
     });
@@ -340,7 +395,7 @@ describe("Task Controller", () => {
       expect(reply.status).toHaveBeenCalledWith(StatusCode.NOT_FOUND);
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Tarefa não encontrado. Forneça um numero de id valido",
+          "Tarefa não encontrada. Forneça um número de id válido",
           StatusCode.NOT_FOUND
         ).buildResponseObject()
       );
@@ -359,7 +414,7 @@ describe("Task Controller", () => {
       );
       expect(reply.send).toHaveBeenCalledWith(
         new ResponseErrorDTO(
-          "Não foi possível criar a tarefa. Por favor tente novamente mais tarde",
+          "Não foi possível deletar a tarefa. Por favor tente novamente mais tarde",
           StatusCode.INTERNAL_SERVER_ERROR
         ).buildResponseObject()
       );
