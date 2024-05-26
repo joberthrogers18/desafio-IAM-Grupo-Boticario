@@ -14,7 +14,9 @@ class TaskService {
           task.description,
           task.isCompleted,
           task.creationDate,
-          task.modifiedDate
+          task.modifiedDate,
+          task.LabelId,
+          task.Label.name
         )
     );
   }
@@ -27,7 +29,9 @@ class TaskService {
       task.description,
       task.isCompleted,
       task.creationDate,
-      task.modifiedDate
+      task.modifiedDate,
+      task.LabelId,
+      task.Label.name
     );
   }
 
@@ -41,7 +45,9 @@ class TaskService {
           task.description,
           task.isCompleted,
           task.creationDate,
-          task.modifiedDate
+          task.modifiedDate,
+          task.LabelId,
+          task.Label.name
         )
     );
   }
@@ -50,6 +56,7 @@ class TaskService {
     const hashId = generateHash();
     const currentDate = new Date();
     taskObj.id = hashId;
+    taskObj.LabelId = taskObj.labelId;
     taskObj.creationDate = adjustToBrazilTimezone(currentDate);
     taskObj.modifiedDate = adjustToBrazilTimezone(currentDate);
     const task = await TaskDao.create(taskObj);
@@ -66,6 +73,7 @@ class TaskService {
   async updateTask(id, taskObj) {
     const currentDate = new Date();
     taskObj.modifiedDate = adjustToBrazilTimezone(currentDate);
+    taskObj.LabelId = taskObj.labelId;
     const task = await TaskDao.update(id, taskObj);
     return new TaskDto(
       task.id,
@@ -73,7 +81,8 @@ class TaskService {
       task.description,
       task.isCompleted,
       task.creationDate,
-      task.modifiedDate
+      task.modifiedDate,
+      task.LabelId
     );
   }
 

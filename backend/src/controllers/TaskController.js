@@ -117,10 +117,22 @@ class TaskController {
           );
       }
 
+      if (!taskBody.idEtiqueta && !validator.isInt(taskBody.idEtiqueta)) {
+        return reply
+          .status(StatusCode.NOT_FOUND)
+          .send(
+            new ResponseErrorDTO(
+              "A tarefa deve estar vinculada a uma etiqueta. o campo 'idEtiqueta' não pode ser nulo",
+              StatusCode.NOT_FOUND
+            ).buildResponseObject()
+          );
+      }
+
       const body = {
         title: taskBody.titulo,
         description: taskBody.descricao,
         isCompleted: validator.toBoolean(taskBody.estaCompleto.toString()),
+        labelId: taskBody.idEtiqueta,
       };
 
       const createdTask = await TaskService.createTask(body);
@@ -178,11 +190,23 @@ class TaskController {
           );
       }
 
+      if (!taskBody.idEtiqueta && !validator.isInt(taskBody.idEtiqueta)) {
+        return reply
+          .status(StatusCode.NOT_FOUND)
+          .send(
+            new ResponseErrorDTO(
+              "A tarefa deve estar vinculada a uma etiqueta. o campo 'idEtiqueta' não pode ser nulo",
+              StatusCode.NOT_FOUND
+            ).buildResponseObject()
+          );
+      }
+
       const body = {
         id,
         title: taskBody.titulo,
         description: taskBody.descricao,
         isCompleted: validator.toBoolean(taskBody.estaCompleto.toString()),
+        labelId: taskBody.idEtiqueta,
       };
 
       const updatedTask = await TaskService.updateTask(id, body);

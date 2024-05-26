@@ -1,10 +1,17 @@
 const Task = require("../models/TaskModel");
+const Label = require("../models/LabelModel");
 const NotFoundException = require("../exceptions/NotFoundException");
 
 class TaskDao {
   async findAll() {
     return await Task.findAll({
       order: [["modifiedDate", "DESC"]],
+      include: [
+        {
+          model: Label,
+          attributes: ["name"],
+        },
+      ],
     });
   }
 
@@ -14,11 +21,24 @@ class TaskDao {
         [key]: value,
       },
       order: [["modifiedDate", "DESC"]],
+      include: [
+        {
+          model: Label,
+          attributes: ["name"],
+        },
+      ],
     });
   }
 
   async findById(id) {
-    const taskData = await Task.findByPk(id);
+    const taskData = await Task.findByPk(id, {
+      include: [
+        {
+          model: Label,
+          attributes: ["name"],
+        },
+      ],
+    });
 
     if (!taskData) {
       throw new NotFoundException("Tarefa não encontrada!");
@@ -33,8 +53,8 @@ class TaskDao {
 
   async update(id, task) {
     const taskData = await this.findById(id);
-    await taskData.update(task);
-    return taskData;
+    const updatedTask = await taskData.update(task);
+    return updatedTask;
   }
 
   async delete(id, task) {
