@@ -9,7 +9,7 @@ const mockTask = {
   id: hashIdMock,
   title: "Titulo da Tarefa",
   description: "Descrição da Tarefa",
-  completed: false,
+  isCompleted: false,
 };
 
 jest.mock("../../src/models/TaskModel");
@@ -21,7 +21,14 @@ describe("TaskDao", () => {
 
   it("should find all tasks", async () => {
     Task.findAll.mockResolvedValue([mockTask]);
-    const tasks = await TaskDao.findAll({ LabelId: 1 });
+    const tasks = await TaskDao.findAll({ LabelId: 1, isCompleted: false });
+    expect(Task.findAll).toHaveBeenCalledTimes(1);
+    expect(tasks).toEqual([mockTask]);
+  });
+
+  it("should find all tasks but without filters", async () => {
+    Task.findAll.mockResolvedValue([mockTask]);
+    const tasks = await TaskDao.findAll({ isCompleted: null });
     expect(Task.findAll).toHaveBeenCalledTimes(1);
     expect(tasks).toEqual([mockTask]);
   });
