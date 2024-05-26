@@ -3,13 +3,16 @@ const NotFoundException = require("../exceptions/NotFoundException");
 
 class TaskDao {
   async findAll() {
-    return await Task.findAll();
+    return await Task.findAll({
+      order: [["modifiedDate", "DESC"]],
+    });
   }
 
   async findByKey(key, value) {
     return await Task.findAll({
       where: {
         [key]: value,
+        order: [["modifiedDate", "DESC"]],
       },
     });
   }
