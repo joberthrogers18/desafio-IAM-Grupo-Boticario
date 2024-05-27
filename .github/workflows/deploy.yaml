@@ -19,7 +19,7 @@ jobs:
 
     - name: Run Backend Tests
       working-directory: backend
-      run: npm test
+      run: npm run test
 
   # deploy:
   #   runs-on: ubuntu-latest

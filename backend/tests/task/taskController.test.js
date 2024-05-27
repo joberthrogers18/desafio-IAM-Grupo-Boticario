@@ -1,4 +1,4 @@
-const TaskController = require("../../src/controllers/taskController");
+const TaskController = require("../../src/controllers/TaskController");
 const TaskService = require("../../src/services/TaskService");
 const StatusCode = require("../../src/constants/StatusCode");
 const ResponseDTO = require("../../src/dtos/ResponseDTO");
