@@ -25,7 +25,7 @@ describe("TaskRoutes", () => {
   });
 
   test("GET /tarefa should call TaskController.getAllTask", async () => {
-    TaskController.getAllTask.mockResolvedValue({}); // Simula a resposta do controlador
+    TaskController.getAllTask.mockResolvedValue({});
 
     const response = await app.inject({
       method: "GET",
