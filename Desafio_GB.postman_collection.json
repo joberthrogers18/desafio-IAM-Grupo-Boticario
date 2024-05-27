@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "8dafbdb2-fa17-4081-b688-ea46deb5a6e8",
+		"name": "Desafio_GB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tarefas",
+			"item": [
+				{
+					"name": "Retornar todos as tarefas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/tarefa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tarefa"
+							],
+							"query": [
+								{
+									"key": "idEtiqueta",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "estaCompleta",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Tarefa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Titulo tarefa\",\n    \"descricao\": \"Descriação tarefa\",\n    \"estaCompleto\": false,\n    \"idEtiqueta\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/tarefa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tarefa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retornar tarefa por id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/tarefa/fd87b4d2ae48c3fd01e154f5984f44370b049d588367f839952ba0e4bba8775e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tarefa",
+								"fd87b4d2ae48c3fd01e154f5984f44370b049d588367f839952ba0e4bba8775e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar tarefas",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"f31f3724d850fe9e1440cddc97abd514af69433651122c530cb5364c5ee68a97\",\n    \"tarefa\": {\n        \"titulo\": \"Titulo tarefa\",\n        \"descricao\": \"Descriação tarefa\",\n        \"estaCompleto\": true,\n        \"idEtiqueta\": 3\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/tarefa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tarefa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar tarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/tarefa/351ad5b6d39dbb6e1fc1d91bc9aac3cf20160f9a86c91ead9e3241461e714003",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tarefa",
+								"351ad5b6d39dbb6e1fc1d91bc9aac3cf20160f9a86c91ead9e3241461e714003"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Etiquetas",
+			"item": [
+				{
+					"name": "Retornando todas etiquetas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxMjM0YWUyMGM0ZWJmNTBlZGRiMWY5MmQwZDEyZDg1MDMzNDg1MWJiZmJjYTBkZGVlMDM0OTYwOGQ5MjcwY2UiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2ODA1ODQ2LCJleHAiOjE3MTc0MTA2NDZ9.9CTNb_UgOAW_OdAUkGmzNvXNfoHgdcA1mIYgmid-cOU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/etiquetas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"etiquetas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Registrar Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"joberth.rogers18@gmail.com\",\n    \"usuario\": \"joberth\",\n    \"senha\": \"23231215\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logar usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"joberth.rogers18@gmail.com\",\n    \"senha\": \"23231215\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/usuario/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Usuário",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"d3fcffd5bb87d09a8df79a3ff738fd7eca849f1260f765e3cb09543c34267271\",\n    \"perfil\": {\n        \"email\": \"joberth.rogers18@gmail.com\",\n        \"usuario\": \"joberth\",\n        \"senha\": \"Job23231215!\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzODFkNzBlYjk3MTM3MmQ0M2UyNzdlOTIzNWI1MWZhYWIwMGFiMWJjZTZhOWZiNWQwMTI1ZTg2NDE1YWI5NDkiLCJ1c2VybmFtZSI6ImpvYmVydGgiLCJlbWFpbCI6ImpvYmVydGgucm9nZXJzMThAZ21haWwuY29tIiwiaWF0IjoxNzE2NzY5ODE5LCJleHAiOjE3MTczNzQ2MTl9.l94iZrh6VgKxujJi_3sfh3k-LMd9IBnh0yfCGchiGfw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/usuario/6eee886d1113d2165b0836921fcd29734425b9d34f45b9cff294ce1b478630cc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario",
+								"6eee886d1113d2165b0836921fcd29734425b9d34f45b9cff294ce1b478630cc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
