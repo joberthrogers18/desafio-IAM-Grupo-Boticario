@@ -16,8 +16,9 @@ class TaskController {
             : null,
         LabelId: request.query.idEtiqueta,
       };
+      const idUser = request.user.id;
 
-      const tasks = await TaskService.getAllTasks(filters);
+      const tasks = await TaskService.getAllTasks(filters, idUser);
       return reply
         .status(StatusCode.SUCCESS)
         .send(new ResponseDTO(tasks, "").buildResponseObject());
@@ -82,6 +83,7 @@ class TaskController {
   async postTaskObject(request, reply) {
     try {
       const taskBody = request.body;
+      const userId = request.user.id;
 
       if (
         !taskBody.titulo ||
@@ -121,7 +123,7 @@ class TaskController {
         labelId: taskBody.idEtiqueta,
       };
 
-      const createdTask = await TaskService.createTask(body);
+      const createdTask = await TaskService.createTask(body, userId);
       return reply
         .status(StatusCode.CREATED)
         .send(
@@ -131,7 +133,7 @@ class TaskController {
           ).buildResponseObject()
         );
     } catch (error) {
-      console.log("error: aqui", error);
+      console.log("error:", error);
 
       return reply
         .status(StatusCode.INTERNAL_SERVER_ERROR)

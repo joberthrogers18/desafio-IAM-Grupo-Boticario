@@ -3,8 +3,10 @@ const Label = require("../models/LabelModel");
 const NotFoundException = require("../exceptions/NotFoundException");
 
 class TaskDao {
-  async findAll(filters) {
-    const where = {};
+  async findAll(filters, idUser) {
+    const where = {
+      UserId: idUser,
+    };
 
     if (filters.isCompleted !== null) {
       where.isCompleted = filters.isCompleted;
