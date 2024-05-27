@@ -13,10 +13,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install dependencies and run tests
-      run: |
-        npm install        
-        npm test
+    - name: Navigate to Backend Directory
+      run: cd backend
+
+    - name: Install Backend Dependencies
+      run: npm install
+
+    - name: Run Backend Tests
+      run: npm test
 
   deploy:
     runs-on: ubuntu-latest
