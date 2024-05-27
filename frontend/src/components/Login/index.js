@@ -52,7 +52,7 @@ export default function Login() {
       <Toast ref={toast} />
       <div className="login-wrapper flex flex-column justify-content-between">
         <div className="w-full flex justify-content-center title">
-          <p className="m-0 ali">Login</p>
+          <p className="m-0 text-2xl">Login</p>
         </div>
         <div className="input-wrapper w-full flex justify-content-center flex-column">
           <label className="mb-3">Email</label>
@@ -81,6 +81,10 @@ export default function Login() {
           loading={loading}
           onClick={() => handleSubmit()}
         />
+
+        <div className="hyperlink flex justify-content-center">
+          <a href="/registrar">Registre-se</a>
+        </div>
       </div>
     </div>
   );

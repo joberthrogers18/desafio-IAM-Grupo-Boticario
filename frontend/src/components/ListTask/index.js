@@ -4,6 +4,7 @@ import { Card } from "primereact/card";
 import { Skeleton } from "primereact/skeleton";
 import { ConfirmPopup } from "primereact/confirmpopup";
 import { confirmPopup } from "primereact/confirmpopup";
+import { Tag } from "primereact/tag";
 
 import "./styles.css";
 import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
@@ -61,7 +62,8 @@ function ListTask({
         task.id,
         task.title,
         task.description,
-        !task.isComplete
+        !task.isComplete,
+        task.labelId
       );
 
       const response = await axiosInstance.put("/tarefa", body);
@@ -125,6 +127,19 @@ function ListTask({
     });
   }
 
+  function getSeverity(priority) {
+    switch (priority) {
+      case "Alta":
+        return "danger";
+
+      case "Media":
+        return "warning";
+
+      default:
+        return "success";
+    }
+  }
+
   return (
     <div className="list-task flex justify-content-center flex-column">
       {!loading && filterTasks && filterTasks.length > 0
@@ -146,7 +161,17 @@ function ListTask({
                       onClick={() => setTaskEnableEdit(taskItem)}
                     />
                   </div>
-                  <div className="description-task">{taskItem.description}</div>
+                  <div className="label mb-3">
+                    <span className="label-priority">Prioridade:</span>{" "}
+                    <Tag
+                      severity={getSeverity(taskItem.nameLabel)}
+                      value={taskItem.nameLabel}
+                    ></Tag>
+                  </div>
+                  <div className="description-task">
+                    <span className="label-priority">Descrição:</span>{" "}
+                    {taskItem.description}
+                  </div>
                 </div>
                 <div className="content-action col-12 md:col-2 flex flex-column flex-wrap align-items-end">
                   {isTaskCompleted && (

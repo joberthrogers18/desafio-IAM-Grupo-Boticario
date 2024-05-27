@@ -11,8 +11,8 @@ function App() {
       <Navbar />
       <Router>
         <Routes>
-          <Route exact path="/" element={<Auth />} />
-          <Route exact path="/registrar" element={<Todo />} />
+          <Route exact path="/" element={<Auth isLogin={true} />} />
+          <Route exact path="/registrar" element={<Auth isLogin={false} />} />
           <Route exact path="/main" element={<Todo />} />
         </Routes>
       </Router>

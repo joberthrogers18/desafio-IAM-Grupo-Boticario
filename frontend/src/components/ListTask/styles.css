@@ -26,6 +26,12 @@
   text-transform: uppercase;
 }
 
+.list-task .label-priority {
+  color: var(--first-color-text);
+  font-size: 15px;
+  font-weight: 900;
+}
+
 .list-task .no-data-label {
   font-size: 18px;
   font-weight: 800;

@@ -14,6 +14,7 @@ function Todo() {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
+  const [labels, setLabels] = useState([]);
   const [taskEdition, setTaskEdition] = useState(null);
   const toast = useRef(null);
 
@@ -21,10 +22,13 @@ function Todo() {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.get(`/tarefa`);
+      const [responseTask, responseLabels] = await Promise.all([
+        axiosInstance.get(`/tarefa`),
+        axiosInstance.get(`/etiquetas`),
+      ]);
 
       setTasks(
-        response.data.data.map(
+        responseTask.data.data.map(
           (task) =>
             new TaskMapDto(
               task.id,
@@ -32,9 +36,18 @@ function Todo() {
               task.descricao,
               task.estaCompleto,
               task.dataCriacao,
-              task.dataModificacao
+              task.dataModificacao,
+              task.etiqueta.id,
+              task.etiqueta.nome
             )
         )
+      );
+
+      setLabels(
+        responseLabels.data.data.map((label) => ({
+          name: label.nome,
+          code: label.id,
+        }))
       );
     } catch (error) {
       toast.current.show({
@@ -110,6 +123,7 @@ function Todo() {
         feedbackCreation={feedbackCreationTask}
         taskEdition={taskEdition}
         setTaskEdition={setTaskEdition}
+        labels={labels}
       />
       <Toast ref={toast} />
     </div>

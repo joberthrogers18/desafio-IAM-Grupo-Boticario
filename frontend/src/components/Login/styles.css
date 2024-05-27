@@ -22,3 +22,8 @@
   font-weight: 900;
   text-decoration: underline;
 }
+
+.hyperlink a {
+  color: var(--first-color-text);
+  font-weight: 800;
+}

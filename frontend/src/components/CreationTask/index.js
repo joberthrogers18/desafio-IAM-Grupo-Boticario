@@ -3,6 +3,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
+import { Dropdown } from "primereact/dropdown";
 
 import "./styles.css";
 import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
@@ -17,14 +18,19 @@ function CreationTask({
   feedbackCreation,
   taskEdition,
   setTaskEdition,
+  labels,
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [selectedPriority, setSelectedPriority] = useState(null);
   const [loadingCreation, setLoadingCreation] = useState("");
 
   useMemo(() => {
     setTitle((taskEdition && taskEdition.title) || "");
     setDescription((taskEdition && taskEdition.description) || "");
+    setSelectedPriority(
+      taskEdition && { code: taskEdition.labelId, name: taskEdition.nameLabel }
+    );
   }, [taskEdition]);
 
   function cleanFields() {
@@ -35,7 +41,12 @@ function CreationTask({
   async function requestCreateTask() {
     try {
       setLoadingCreation(true);
-      const body = new BodyPostTaskDto(title, description, false);
+      const body = new BodyPostTaskDto(
+        title,
+        description,
+        false,
+        selectedPriority.code || 1
+      );
 
       const response = await axiosInstance.post(`/tarefa`, body);
 
@@ -62,7 +73,8 @@ function CreationTask({
         task.id,
         title,
         description,
-        task.isComplete
+        task.isComplete,
+        task.labelId
       );
 
       const response = await axiosInstance.put("/tarefa", body);
@@ -111,6 +123,17 @@ function CreationTask({
           <InputText
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="w-full"
+          />
+        </div>
+        <div className="card flex flex-column mb-4">
+          <label className="mb-2 label-dialog">Prioridade</label>
+          <Dropdown
+            value={selectedPriority}
+            onChange={(e) => setSelectedPriority(e.value)}
+            options={labels}
+            optionLabel="name"
+            placeholder="Selecione uma prioridade"
             className="w-full"
           />
         </div>
