@@ -8,7 +8,7 @@ import { confirmPopup } from "primereact/confirmpopup";
 import "./styles.css";
 import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
 import { StatusCode } from "../../constants/StatusCode";
-import { envVariables } from "../../constants/envVariables";
+import axiosInstance from "../../config/axiosConfig";
 
 function renderScreenFinalRequisitionState(loading) {
   return loading ? (
@@ -64,21 +64,13 @@ function ListTask({
         !task.isComplete
       );
 
-      const response = await fetch(`${envVariables.BASE_URL}/tarefa`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-
-      const responseJson = await response.json();
+      const response = await axiosInstance.put("/tarefa", body);
 
       if (
-        "statusCode" in responseJson &&
-        responseJson.statusCode === StatusCode.BAD_REQUEST
+        "statusCode" in response &&
+        response.statusCode === StatusCode.BAD_REQUEST
       ) {
-        feedbackCreation("Error", responseJson.message, "error");
+        feedbackCreation("Error", response.message, "error");
         return;
       }
 
@@ -100,12 +92,7 @@ function ListTask({
     try {
       signLoadingData(true);
 
-      await fetch(`${envVariables.BASE_URL}/tarefa/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await axiosInstance.delete(`/tarefa/${id}`);
 
       feedbackCreation("Sucesso", "Tarefa deletada com sucesso", "success");
       reloadData();

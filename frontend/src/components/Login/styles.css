@@ -1,0 +1,24 @@
+.login .login-wrapper {
+  width: 70%;
+  height: 60%;
+}
+
+.p-password-input {
+  width: 100%;
+}
+
+.p-icon-field {
+  width: 100%;
+}
+
+.login .input-wrapper label {
+  color: var(--first-color-text);
+  font-weight: 800;
+}
+
+.login .title {
+  font-size: 1.7vw;
+  color: var(--primary-color);
+  font-weight: 900;
+  text-decoration: underline;
+}

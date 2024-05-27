@@ -8,7 +8,7 @@ import "./styles.css";
 import { BodyUpdateTaskDto } from "../../dtos/BodyUpdateTaskDto";
 import { StatusCode } from "../../constants/StatusCode";
 import { BodyPostTaskDto } from "../../dtos/BodyPostTaskDto";
-import { envVariables } from "../../constants/envVariables";
+import axiosInstance from "../../config/axiosConfig";
 
 function CreationTask({
   visible,
@@ -37,17 +37,9 @@ function CreationTask({
       setLoadingCreation(true);
       const body = new BodyPostTaskDto(title, description, false);
 
-      const response = await fetch(`${envVariables.BASE_URL}/tarefa`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      const response = await axiosInstance.post(`/tarefa`, body);
 
-      const responseParseJson = await response.json();
-
-      feedbackCreation("Sucesso", responseParseJson.message, "success");
+      feedbackCreation("Sucesso", response.message, "success");
       cleanFields();
       onChangeVisible(false);
       reloadData();
@@ -73,25 +65,17 @@ function CreationTask({
         task.isComplete
       );
 
-      const response = await fetch(`${envVariables.BASE_URL}/tarefa`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-
-      const responseParseJson = await response.json();
+      const response = await axiosInstance.put("/tarefa", body);
 
       if (
-        "statusCode" in responseParseJson &&
-        responseParseJson.statusCode === StatusCode.BAD_REQUEST
+        "statusCode" in response &&
+        response.statusCode === StatusCode.BAD_REQUEST
       ) {
-        feedbackCreation("Error", responseParseJson.message, "error");
+        feedbackCreation("Error", response.message, "error");
         return;
       }
 
-      feedbackCreation("Sucesso", responseParseJson.message, "success");
+      feedbackCreation("Sucesso", response.message, "success");
       setTaskEdition(null);
       cleanFields();
       onChangeVisible(false);

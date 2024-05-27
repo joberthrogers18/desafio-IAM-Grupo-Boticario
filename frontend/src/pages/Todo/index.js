@@ -8,7 +8,7 @@ import ListTask from "../../components/ListTask";
 import "./styles.css";
 import CreationTask from "../../components/CreationTask";
 import { TaskMapDto } from "../../dtos/TaskMapDto";
-import { envVariables } from "../../constants/envVariables";
+import axiosInstance from "../../config/axiosConfig";
 
 function Todo() {
   const [visible, setVisible] = useState(false);
@@ -21,11 +21,10 @@ function Todo() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${envVariables.BASE_URL}/tarefa`);
-      const responseJson = await response.json();
+      const response = await axiosInstance.get(`/tarefa`);
 
       setTasks(
-        responseJson.data.map(
+        response.data.data.map(
           (task) =>
             new TaskMapDto(
               task.id,

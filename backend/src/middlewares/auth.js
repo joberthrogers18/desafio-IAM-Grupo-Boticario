@@ -5,7 +5,7 @@ const { verifyToken } = require("../utils/auth");
 const authMiddleware = (request, reply, done) => {
   const authHeader = request.headers.authorization;
 
-  if (authHeader && authHeader.includes("Berear")) {
+  if (authHeader && authHeader.includes("Bearer")) {
     const token = authHeader.split(" ")[1];
     const decoded = verifyToken(token);
 
@@ -32,6 +32,7 @@ const authMiddleware = (request, reply, done) => {
         )
       );
   }
+  done();
 };
 
 module.exports = authMiddleware;
