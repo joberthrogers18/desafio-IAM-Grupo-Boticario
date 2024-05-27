@@ -74,7 +74,7 @@ function CreationTask({
         title,
         description,
         task.isComplete,
-        task.labelId
+        selectedPriority.code || 1
       );
 
       const response = await axiosInstance.put("/tarefa", body);
