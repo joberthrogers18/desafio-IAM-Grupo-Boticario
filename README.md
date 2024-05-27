@@ -20,8 +20,9 @@
    - [Manipulação de Tarefas](#manipulação-de-tarefas)
    - [Carregamento de Etiquetas da Tarefa](#carregamento-de-etiquetas-da-tarefa)
 4. [Diagrama de pacotes](#diagrama-de-pacotes)
-5. [Como rodar o projeto](#como-rodar-o-projeto)
-6. [Screen Shots](#screen-shots)
+5  [Testes de Software](#testes-de-software)
+6. [Como rodar o projeto](#como-rodar-o-projeto)
+7. [Screen Shots](#screen-shots)
    - [Web](#web)
      - [Tela de login](#tela-de-login)
      - [Tela de registro](#tela-de-registro)
@@ -33,7 +34,7 @@
      - [Tela de registro](#tela-de-registro-1)
      - [Tela principal](#tela-principal-1)
      - [Modal criação e edição de tarefas](#modal-criação-e-edição-de-tarefas-1)
-7. [Desafio Teórico](#desafio-teórico)
+8. [Desafio Teórico](#desafio-teórico)
    - [O que é Node.js e qual é sua principal vantagem em relação a outras plataformas de desenvolvimento?](#1-o-que-é-nodejs-e-qual-é-sua-principal-vantagem-em-relação-a-outras-plataformas-de-desenvolvimento)
    - [Explique o que é o Fastify e como ele é usado em aplicações Node.js.](#2-explique-o-que-é-o-fastify-e-como-ele-é-usado-em-aplicações-nodejs)
    - [Qual é a diferença entre os métodos HTTP GET e POST e quando cada um deve ser usado?](#3-qual-é-a-diferença-entre-os-métodos-http-get-e-post-e-quando-cada-um-deve-ser-usado)
@@ -193,6 +194,17 @@ Abaixo é mostrado a imagem da arquitetura implementada e explicada acima:
 Abaixo se encontra uma imagem com a diagramação de pacotes do projeto de uma forma mais facilitada e com a conexão entre pacotes.
 
 ![Diagrama de Pacotes](./screenshots/diagrama_pacotes.png)
+
+## 5. Testes te Software
+
+Foram feitos testes unitários para cobertura do projeto. Todos os arquivos de regras de negócio tiveram grau alto de coverage como é possível visualizar abaixo:
+
+![Diagrama de Pacotes](./screenshots/coverage_teste.png)
+
+Além do mais além do CI/CD de deployment, também criei um job para verificar a procedência dos testes a cada subida para o branch **main**.
+
+![CI passos](./screenshots/CI-passos.png)
+![CI passos](./screenshots/prompt-CI.png)
 
 ## 5. Como rodar o projeto:
 
