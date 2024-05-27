@@ -6,7 +6,6 @@ const ResponseErrorDTO = require("../dtos/ResponseErrorDTO");
 const NotFoundException = require("../exceptions/NotFoundException");
 const User = require("../models/UserModel");
 const AuthService = require("../services/AuthService");
-const TaskService = require("../services/TaskService");
 const { generateToken } = require("../utils/auth");
 const { hashPassword, verifyPassword } = require("../utils/encryption");
 
