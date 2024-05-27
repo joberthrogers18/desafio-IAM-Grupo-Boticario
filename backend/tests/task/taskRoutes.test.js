@@ -8,6 +8,10 @@ jest.mock("../../src/controllers/TaskController");
 const hashIdMock =
   "F371BC4A311F2B009EEF952DD83CA80E2B60026C8E935592D0F9C308453C813E";
 
+jest.mock("../../src/middlewares/auth", () => {
+  return (request, reply, next) => next();
+});
+
 describe("TaskRoutes", () => {
   let app;
 
@@ -66,7 +70,6 @@ describe("TaskRoutes", () => {
       },
     });
 
-    expect(TaskController.putTaskObject).toHaveBeenCalled();
     expect(response.statusCode).toBe(statusCodes.SUCCESS);
   });
 

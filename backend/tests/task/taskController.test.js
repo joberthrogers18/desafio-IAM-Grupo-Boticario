@@ -15,7 +15,7 @@ describe("Task Controller", () => {
   let reply;
 
   beforeEach(() => {
-    request = { body: {}, params: {}, query: {} };
+    request = { body: {}, params: {}, query: {}, user: {} };
     reply = {
       code: jest.fn().mockReturnThis(),
       status: jest.fn().mockReturnThis(),
@@ -33,6 +33,7 @@ describe("Task Controller", () => {
           estaCompleto: false,
         },
       ];
+      request.user.id = 1;
       TaskService.getAllTasks.mockResolvedValue(mockTasks);
 
       await TaskController.getAllTask(request, reply);
@@ -139,6 +140,7 @@ describe("Task Controller", () => {
         idEtiqueta: 1,
       };
       request.body = taskBody;
+      request.user.id = 1;
       const mockTask = { id: 1, ...taskBody };
       TaskService.createTask.mockResolvedValue(mockTask);
 
@@ -181,6 +183,7 @@ describe("Task Controller", () => {
         estaCompleto: false,
       };
       request.body = taskBody;
+      request.user.id = 1;
       const mockTask = { id: hashIdMock, ...taskBody, labelId: 1 };
       TaskService.createTask.mockResolvedValue(mockTask);
 
@@ -197,6 +200,7 @@ describe("Task Controller", () => {
 
     it("should return 400 if request body is invalid", async () => {
       request.body = { titulo: "Novo Titulo" };
+      request.user.id = 1;
 
       await TaskController.postTaskObject(request, reply);
 

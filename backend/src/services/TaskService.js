@@ -21,7 +21,7 @@ class TaskService {
     );
   }
 
-  async getTaskById(id) {
+  async getTaskById(id, idUser) {
     const task = await TaskDao.findById(id, idUser);
     return new TaskDto(
       task.id,

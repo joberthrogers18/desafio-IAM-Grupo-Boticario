@@ -86,7 +86,7 @@ describe("Task Service", () => {
     };
 
     TaskDao.findById.mockResolvedValue(mockTasks);
-    const tasks = await TaskService.getTaskById(hashIdsMock[0]);
+    const tasks = await TaskService.getTaskById(hashIdsMock[0], 1);
 
     expect(TaskDao.findById).toHaveBeenCalledTimes(1);
     expect(tasks).toEqual(

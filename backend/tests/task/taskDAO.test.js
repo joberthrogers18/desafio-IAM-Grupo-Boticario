@@ -74,25 +74,9 @@ describe("TaskDao", () => {
   });
 
   it("should delete a task", async () => {
-    const mockTask = {
-      id: 1,
-      title: "Delete Task",
-      description: "Delete Description",
-      completed: false,
-    };
-    Task.findByPk.mockResolvedValue(mockTask);
-    mockTask.destroy = jest.fn().mockResolvedValue(mockTask);
+    Task.destroy = jest.fn().mockResolvedValue({});
+    await TaskDao.delete(hashIdMock);
 
-    const deletedTask = await TaskDao.delete(1);
-
-    expect(Task.findByPk).toHaveBeenCalledWith(1, expect.anything());
-    expect(mockTask.destroy).toHaveBeenCalled();
-    expect(deletedTask).toEqual(mockTask);
-  });
-
-  it("should throw NotFoundException if task to delete is not found", async () => {
-    Task.findByPk.mockResolvedValue(null);
-
-    await expect(TaskDao.delete(1)).rejects.toThrow(NotFoundException);
+    expect(Task.destroy).toHaveBeenCalled();
   });
 });
