@@ -1,6 +1,44 @@
-# desafio-IAM-Grupo-Boticario
+# Desafio-IAM-Grupo-Boticario
 
 ## OBS: Aplicação presente no link: [http://44.220.139.209/](http://44.220.139.209/)
+
+# Sumário
+
+1. [Introdução](#introdução)
+2. [Arquitetura do Projeto](#arquitetura-do-projeto)
+   - [Visão Geral](#visão-geral)
+   - [Camadas da Arquitetura](#camadas-da-arquitetura)
+     - [Camada de Apresentação (Frontend)](#camada-de-apresentação-frontend)
+     - [Camada de Lógica de Negócios (Backend)](#camada-de-lógica-de-negócios-backend)
+     - [Camada de Persistência de Dados (Banco de Dados)](#camada-de-persistência-de-dados-banco-de-dados)
+   - [Fluxo de Dados](#fluxo-de-dados)
+   - [Deploy e Configuração](#deploy-e-configuração)
+   - [Testes](#testes)
+   - [Segurança](#segurança)
+3. [Divisão dos endpoints (Backend)](#divisão-dos-endpoints-backend)
+   - [Autenticação e Criação de Usuários](#autenticação-e-criação-de-usuários)
+   - [Manipulação de Tarefas](#manipulação-de-tarefas)
+   - [Carregamento de Etiquetas da Tarefa](#carregamento-de-etiquetas-da-tarefa)
+4. [Diagrama de pacotes](#diagrama-de-pacotes)
+5. [Como rodar o projeto](#como-rodar-o-projeto)
+6. [Screen Shots](#screen-shots)
+   - [Web](#web)
+     - [Tela de login](#tela-de-login)
+     - [Tela de registro](#tela-de-registro)
+     - [Tela principal](#tela-principal)
+     - [Modal criação e edição de tarefas](#modal-criação-e-edição-de-tarefas)
+     - [Modal concluídos](#modal-concluídos)
+   - [Mobile](#mobile)
+     - [Tela de login](#tela-de-login-1)
+     - [Tela de registro](#tela-de-registro-1)
+     - [Tela principal](#tela-principal-1)
+     - [Modal criação e edição de tarefas](#modal-criação-e-edição-de-tarefas-1)
+7. [Desafio Teórico](#desafio-teórico)
+   - [O que é Node.js e qual é sua principal vantagem em relação a outras plataformas de desenvolvimento?](#1-o-que-é-nodejs-e-qual-é-sua-principal-vantagem-em-relação-a-outras-plataformas-de-desenvolvimento)
+   - [Explique o que é o Fastify e como ele é usado em aplicações Node.js.](#2-explique-o-que-é-o-fastify-e-como-ele-é-usado-em-aplicações-nodejs)
+   - [Qual é a diferença entre os métodos HTTP GET e POST e quando cada um deve ser usado?](#3-qual-é-a-diferença-entre-os-métodos-http-get-e-post-e-quando-cada-um-deve-ser-usado)
+   - [Quais são algumas das melhores práticas de segurança para desenvolvimento de aplicações web?](#4-quais-são-algumas-das-melhores-práticas-de-segurança-para-desenvolvimento-de-aplicações-web)
+
 
 ## 1. Introdução
 
@@ -228,5 +266,20 @@ Para parar e remover os contêineres, execute o comando:
 
 ![tela criação web](./screenshots/app/mobile_tela_criacao.png)
 
+# Desafio Teórico
 
+## **1. O que é Node.js e qual é sua principal vantagem em relação a outras plataformas de desenvolvimento?**
 
+O node js é uma plataforma de desenvolvimento usada para  executar código JavaScript no lado servidor, no caso usando a engine v8 no qual tem uma experiência incrível no desenvolvimento e em produção. Uma das suas principais vantagens é a sua capacidade de construir aplicações escaláveis e de alto desempenho, devido ao modelo de E/S não bloqueante, o que melhora muito a sua performance de acordo com a grandeza do projeto de acordo com o seu crescimento.
+
+## **2. Explique o que é o Fastify e como ele é usado em aplicações Node.js.**
+
+Já o fastify é um framework web para o Node, onde seu principal objetivo é focado em desempenho e baixa sobrecarga para o que está sendo desenvolvido. Ele é usado para construir aplicações webs, APIs de forma muito amigável, além de oferecer uma gama enorme de recursos para roteamento, middlewares, validação de entrada e etc.
+
+## **3. Qual é a diferença entre os métodos HTTP GET e POST e quando cada um deve ser usado?**
+
+Os métodos GET e POST são usados dentro do protocolo REST e cada um tem uma responsabilidade. No caso o verbo GET  é usado para solicitar dados de algum recurso específico dentro da API, enquanto o POST é usado para enviar dados para serem manipulados e salvos pela API . O GET é usado frequentemente para recuperação de dados, como em buscas, já o POST é usado para enviar dados sensíveis ou fazer alguma alteração desejada. Além desses métodos há vários outros dentro do protocolo HTTP, como é o caso do PUT para atualização e o DELETE responsável pela deleção de dados.
+
+## **4. Quais são algumas das melhores práticas de segurança para desenvolvimento de aplicações web?**
+
+As melhores e importantes práticas durante o desenvolvimento web são prática do desenvolvedor validar e filtrar todas as entradas evitando que qualquer vulnerabilidade através de injeção seja concluída, também há a preferência por usar protocolos como o HTTPS para evitar interceptação de dados por usuários indevidos e a preservação dos dados com criptografia. A implementação de autenticação nas rotas usadas. Manter atualizado as bibliotecas e frameworks usados. Implementação de hash para dados sensíveis.
