@@ -4,53 +4,46 @@
 
 # Sumário
 
-1. [Introdução](#introdução)
-2. [Arquitetura do Projeto](#arquitetura-do-projeto)
-   - [Visão Geral](#visão-geral)
-   - [Camadas da Arquitetura](#camadas-da-arquitetura)
-     - [Camada de Apresentação (Frontend)](#camada-de-apresentação-frontend)
-     - [Camada de Lógica de Negócios (Backend)](#camada-de-lógica-de-negócios-backend)
-     - [Camada de Persistência de Dados (Banco de Dados)](#camada-de-persistência-de-dados-banco-de-dados)
-   - [Fluxo de Dados](#fluxo-de-dados)
-   - [Deploy e Configuração](#deploy-e-configuração)
-   - [Testes](#testes)
-   - [Segurança](#segurança)
-3. [Divisão dos endpoints (Backend)](#divisão-dos-endpoints-backend)
+1. [Introdução](#1-introdução)
+2. [Arquitetura do Projeto](#2-arquitetura-do-projeto)
+   - [Visão Geral](#21-visão-geral)
+   - [Camadas da Arquitetura](#22-camadas-da-arquitetura)
+     - [Camada de Apresentação (Frontend)](#221-camada-de-apresentação-frontend)
+     - [Camada de Lógica de Negócios (Backend)](#222-camada-de-lógica-de-negócios-backend)
+     - [Camada de Persistência de Dados (Banco de Dados)](#223-camada-de-persistência-de-dados-banco-de-dados)
+   - [Fluxo de Dados](#23-fluxo-de-dados)
+   - [Deploy e Configuração](#24-deploy-e-configuração)
+   - [Testes](#25-testes)
+   - [Segurança](#26-segurança)
+   - [Diagramas](#27-diagramas)
+3. [Divisão dos endpoints (Backend)](#3-divisão-dos-endpoints-backend)
    - [Autenticação e Criação de Usuários](#autenticação-e-criação-de-usuários)
    - [Manipulação de Tarefas](#manipulação-de-tarefas)
    - [Carregamento de Etiquetas da Tarefa](#carregamento-de-etiquetas-da-tarefa)
-4. [Diagrama de pacotes](#diagrama-de-pacotes)
-5  [Testes de Software](#testes-de-software)
-6. [Como rodar o projeto](#como-rodar-o-projeto)
-7. [Screen Shots](#screen-shots)
-   - [Web](#web)
-     - [Tela de login](#tela-de-login)
-     - [Tela de registro](#tela-de-registro)
-     - [Tela principal](#tela-principal)
-     - [Modal criação e edição de tarefas](#modal-criação-e-edição-de-tarefas)
-     - [Modal concluídos](#modal-concluídos)
-   - [Mobile](#mobile)
-     - [Tela de login](#tela-de-login-1)
-     - [Tela de registro](#tela-de-registro-1)
-     - [Tela principal](#tela-principal-1)
-     - [Modal criação e edição de tarefas](#modal-criação-e-edição-de-tarefas-1)
+4. [Diagrama de pacotes](#4-diagrama-de-pacotes)
+5  [Testes de Software](#5-testes-te-software)
+6. [Como rodar o projeto](#5-como-rodar-o-projeto)
+7. [Screen Shots](#6-screen-shots)
+   - [Web](#61-web)
+     - [Tela de login](#611-tela-de-login)
+     - [Tela de registro](#612-tela-de-registro)
+     - [Tela principal](#613-tela-principal)
+     - [Modal criação e edição de tarefas](#614-modal-criação-e-edição-de-tarefas)
+     - [Modal concluídos](#615-modal-concluídos)
+   - [Mobile](#62-mobile)
+     - [Tela de login](#621-tela-de-login-1)
+     - [Tela de registro](#622-tela-de-registro-1)
+     - [Tela principal](#623-tela-principal-1)
+     - [Modal criação e edição de tarefas](#624-modal-criação-e-edição-de-tarefas)
 8. [Desafio Teórico](#desafio-teórico)
    - [O que é Node.js e qual é sua principal vantagem em relação a outras plataformas de desenvolvimento?](#1-o-que-é-nodejs-e-qual-é-sua-principal-vantagem-em-relação-a-outras-plataformas-de-desenvolvimento)
    - [Explique o que é o Fastify e como ele é usado em aplicações Node.js.](#2-explique-o-que-é-o-fastify-e-como-ele-é-usado-em-aplicações-nodejs)
    - [Qual é a diferença entre os métodos HTTP GET e POST e quando cada um deve ser usado?](#3-qual-é-a-diferença-entre-os-métodos-http-get-e-post-e-quando-cada-um-deve-ser-usado)
    - [Quais são algumas das melhores práticas de segurança para desenvolvimento de aplicações web?](#4-quais-são-algumas-das-melhores-práticas-de-segurança-para-desenvolvimento-de-aplicações-web)
 
-
 ## 1. Introdução
 
-Este projeto, denominado **Organizerando**, foi desenvolvido como um Test Case para o Grupo Boticário. O objetivo do projeto é criar uma aplicação web que permita aos usuários gerenciar suas tarefas de maneira eficiente. A aplicação oferece funcionalidades de autenticação de usuário, criação, atualização, visualização e exclusão de tarefas, além de gerenciamento de etiquetas associadas a essas tarefas.
-
-
-# desafio-IAM-Grupo-Boticario
-
-## 1. Introdução
-
-Este projeto, adotado como **Organizerando**, foi desenvolvido como um Test Case para o processo seletivo do Grupo Boticário. O objetivo do projeto é criar uma aplicação web que permita aos usuários gerenciar suas tarefas de maneira eficiente. A aplicação oferece funcionalidades de autenticação de usuário, criação, atualização, visualização e exclusão de tarefas, além de gerenciamento de etiquetas associadas a essas tarefas.
+Este projeto, adotado como **OrganiZerando**, foi desenvolvido como um Test Case para o processo seletivo do Grupo Boticário. O objetivo do projeto é criar uma aplicação web que permita aos usuários gerenciar suas tarefas de maneira eficiente. A aplicação oferece funcionalidades de autenticação de usuário, criação, atualização, visualização e exclusão de tarefas, além de gerenciamento de etiquetas associadas a essas tarefas.
 
 ## 2. Arquitetura do Projeto
 
@@ -86,7 +79,7 @@ Este projeto é estruturado em uma arquitetura de três camadas: apresentação,
 #### 2.2.3 Camada de Persistência de Dados (Banco de Dados)
 
 -   **Descrição:** Responsável pelo armazenamento e recuperação de dados.
--   **Tecnologias Utilizadas:** PostgreSQL como banco de dados relacional.
+-   **Tecnologias Utilizadas:** Sqlite como banco de dados relacional.
 -   **Estrutura de Tabelas:**
     -   `Users`: Armazena informações dos usuários.
     -   `Tasks`: Armazena informações das tarefas, incluindo relacionamentos com usuários e etiquetas.
@@ -108,10 +101,6 @@ Este projeto é estruturado em uma arquitetura de três camadas: apresentação,
     
     -   Semelhante ao gerenciamento de tarefas, mas as operações são gerenciadas pelo `LabelController`.
 
-Abaixo é possível visualizar o Diagrama entidade relacionamento do projto:
-
-![DER](./screenshots/DER.png)
-
 ### 2.4 Deploy e Configuração
 
 -   **Deploy:** Utiliza GitHub Actions para CI/CD, que faz deploy automático para uma instância EC2 da AWS. Hoje presente no link [http://44.220.139.209/](http://44.220.139.209/)
@@ -127,6 +116,12 @@ Abaixo é possível visualizar o Diagrama entidade relacionamento do projto:
 -   **Criptografia:** Senhas são hashadas usando bcrypt para armazenamento seguro.
 
 Essa arquitetura modular e bem definida permite que o projeto seja uma aplicação robusta, segura e escalável, facilitando o gerenciamento de tarefas para os usuários.
+
+### 2.7 Diagramas
+
+Abaixo é possível visualizar o Diagrama entidade relacionamento do projto:
+
+![DER](./screenshots/DER.png)
 
 Abaixo é mostrado a imagem da arquitetura implementada e explicada acima:
 
