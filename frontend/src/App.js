@@ -8,8 +8,8 @@ import Auth from "./pages/Auth";
 function App() {
   return (
     <div className="w-full h-full">
-      <Navbar />
       <Router>
+        <Navbar />
         <Routes>
           <Route exact path="/" element={<Auth isLogin={true} />} />
           <Route exact path="/registrar" element={<Auth isLogin={false} />} />

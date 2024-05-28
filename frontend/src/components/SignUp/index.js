@@ -47,9 +47,9 @@ export default function SignUp() {
           severity: "error",
           summary: "Erro",
           detail:
-            error.response.data.data &&
-            error.response.data.data.StatusCode === HttpStatusCode.BadRequest
-              ? error.response.data.data.message
+            error.response.status &&
+            error.response.status === HttpStatusCode.BadRequest
+              ? error.response.data.error
               : "Não foi possível logar tente novamente mais tarde",
         });
       }

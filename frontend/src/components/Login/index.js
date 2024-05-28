@@ -25,8 +25,6 @@ export default function Login() {
         senha: password,
       });
 
-      console.log("token", response);
-
       localStorage.setItem("token", response.data.data.token);
 
       navigate("/main");
