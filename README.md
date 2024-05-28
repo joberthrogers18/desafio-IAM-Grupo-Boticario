@@ -22,19 +22,20 @@
    - [Carregamento de Etiquetas da Tarefa](#carregamento-de-etiquetas-da-tarefa)
 4. [Diagrama de pacotes](#4-diagrama-de-pacotes)
 5  [Testes de Software](#5-testes-te-software)
-6. [Como rodar o projeto](#5-como-rodar-o-projeto)
-7. [Screen Shots](#6-screen-shots)
-   - [Web](#61-web)
-     - [Tela de login](#611-tela-de-login)
-     - [Tela de registro](#612-tela-de-registro)
-     - [Tela principal](#613-tela-principal)
-     - [Modal criação e edição de tarefas](#614-modal-criação-e-edição-de-tarefas)
-     - [Modal concluídos](#615-modal-concluídos)
-   - [Mobile](#62-mobile)
-     - [Tela de login](#621-tela-de-login-1)
-     - [Tela de registro](#622-tela-de-registro-1)
-     - [Tela principal](#623-tela-principal-1)
-     - [Modal criação e edição de tarefas](#624-modal-criação-e-edição-de-tarefas)
+6. [Como rodar o projeto](#6-como-rodar-o-projeto)
+7. [Screen Shots](#7-screen-shots)
+   - [Web](#71-web)
+     - [Tela de login](#711-tela-de-login)
+     - [Tela de registro](#712-tela-de-registro)
+     - [Tela principal](#713-tela-principal)
+     - [Modal criação e edição de tarefas](#714-modal-criação-e-edição-de-tarefas)
+     - [Modal concluídos](#715-modal-concluídos)
+     - [Modal filtragem por prioridade](#716-modal-de-filtragem-por-prioridade)
+   - [Mobile](#72-mobile)
+     - [Tela de login](#721-tela-de-login-1)
+     - [Tela de registro](#722-tela-de-registro-1)
+     - [Tela principal](#723-tela-principal-1)
+     - [Modal criação e edição de tarefas](#724-modal-criação-e-edição-de-tarefas)
 8. [Desafio Teórico](#desafio-teórico)
    - [O que é Node.js e qual é sua principal vantagem em relação a outras plataformas de desenvolvimento?](#1-o-que-é-nodejs-e-qual-é-sua-principal-vantagem-em-relação-a-outras-plataformas-de-desenvolvimento)
    - [Explique o que é o Fastify e como ele é usado em aplicações Node.js.](#2-explique-o-que-é-o-fastify-e-como-ele-é-usado-em-aplicações-nodejs)
@@ -201,16 +202,16 @@ Além do mais além do CI/CD de deployment, também criei um job para verificar 
 ![CI passos](./screenshots/CI-passos.png)
 ![CI passos](./screenshots/prompt-CI.png)
 
-## 5. Como rodar o projeto:
+## 6. Como rodar o projeto:
 
-### 5.1 Pré-requisitos
+### 6.1 Pré-requisitos
 
 Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-### 5.2 Clonar o Repositório
+### 6.2 Clonar o Repositório
 
 Clone o repositório do projeto para sua máquina local:
 
@@ -218,60 +219,66 @@ Clone o repositório do projeto para sua máquina local:
 git clone https://github.com/joberthrogers18/organizerando.git
 cd organizerando` 
 ```
-### 5.3 Rodando containers
+### 6.3 Rodando containers
 
 Certifique-se de que o arquivo `docker-compose.yml` está sua pasta raiz e redirecione para a pasta corrente. Na pasta atual onde se encontra o arquivo xecute os seguintes comandos para buildar e iniciar os containers:
 
 `docker-compose up --build` 
 
-### 5.4 Acessar a Aplicação
+### 6.4 Acessar a Aplicação
 
 Após a conclusão do processo de build, você pode acessar a aplicação em seu navegador:
 
 -   **Frontend:** http://localhost:80
 -   **Backend:** http://localhost:3000
 
-### 5.6 Parar e Remover os Contêineres
+### 6.6 Parar e Remover os Contêineres
 
 Para parar e remover os contêineres, execute o comando:
 
 `docker-compose down` 
 
-## 6. Screen Shots
-### 6.1 Web
-#### 6.1.1 Tela de login
+## 7. Screen Shots
+### 7.1 Web
+#### 7.1.1 Tela de login
 
 ![tela login web](./screenshots/app/web_tela_login.png)
 
-#### 6.1.2 Tela de registro
+#### 7.1.2 Tela de registro
 
 ![tela registro web](./screenshots/app/web_tela_registro.png)
-#### 6.1.3 Tela principal
+#### 7.1.3 Tela principal
 
 ![tela principal web](./screenshots/app/web_tela_principal.png)
 
-#### 6.1.4 Modal criação e edição de tarefas
+#### 7.1.4 Modal criação e edição de tarefas
 
 ![tela criação web](./screenshots/app/web_tela_criar_editar.png)
 ![tela criação web 2](./screenshots/app/web_tela_criar_editar2.png)
-#### 6.1.5 Modal concluídos
+#### 7.1.5 Modal com status concluídos
 
 ![tela criação web](./screenshots/app/web_tela_concluidos.png)
-### 6.1 Mobile
-#### 6.1.1 Tela de login
+#### 7.1.6 Modal de filtragem por prioridade
 
-![tela login web](./screenshots/app/mobile_tela_login.png)
+![tela criação web](./screenshots/app/web_modal_filtro.png)
+### 7.2 Mobile
+#### 7.2.1 Tela de login
 
-#### 6.1.2 Tela de registro
+![tela login mobile](./screenshots/app/mobile_tela_login.png)
 
-![tela registro web](./screenshots/app/mobile_tela_registro.png)
-#### 6.1.3 Tela principal
+#### 7.2.2 Tela de registro
 
-![tela principal web](./screenshots/app/web_tela_principal.png)
+![tela registro mobile](./screenshots/app/mobile_tela_registro.png)
+#### 7.2.3 Tela principal
 
-#### 6.1.4 Modal criação e edição de tarefas
+![tela principal mobile](./screenshots/app/mobile_tela_principal.png)
 
-![tela criação web](./screenshots/app/mobile_tela_criacao.png)
+#### 7.2.4 Modal criação e edição de tarefas
+
+![tela criação mobile](./screenshots/app/mobile_tela_criacao.png)
+#### 7.2.5 Modal filtragem por prioridade
+
+![tela criação mobile](./screenshots/app/mobile_modal_filtro.png)
 
 # Desafio Teórico
 
