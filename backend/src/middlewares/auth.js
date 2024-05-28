@@ -32,7 +32,6 @@ const authMiddleware = (request, reply, done) => {
         )
       );
   }
-  done();
 };
 
 module.exports = authMiddleware;
