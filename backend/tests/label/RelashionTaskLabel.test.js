@@ -35,19 +35,6 @@ describe("Task and Label Models", () => {
       password: "teste",
     });
 
-    console.log("Aquii ===============", label.id, user.id);
-
-    console.log({
-      id: generateHash(),
-      title: "TItulo da Tarefa",
-      description: "Descrição da Tarefa",
-      isCompleted: false,
-      creationDate: new Date(),
-      modifiedDate: new Date(),
-      LabelId: label.id,
-      UserId: user.id,
-    });
-
     const task = await Task.create({
       id: generateHash(),
       title: "TItulo da Tarefa",

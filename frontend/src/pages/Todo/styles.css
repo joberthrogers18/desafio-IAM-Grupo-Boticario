@@ -4,6 +4,12 @@
   background-color: var(--background-color);
 }
 
+.todo-wrapper .btn-filter {
+  background-color: var(--first-color-text);
+  border: none;
+  width: 100%;
+}
+
 .content-todo {
   width: 600px;
   max-width: 600px;
