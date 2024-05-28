@@ -19,6 +19,7 @@ function CreationTask({
   taskEdition,
   setTaskEdition,
   labels,
+  setSelectedFilter,
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -72,6 +73,7 @@ function CreationTask({
       );
     } finally {
       setLoadingCreation(false);
+      setSelectedFilter(null);
     }
   }
 
@@ -110,6 +112,7 @@ function CreationTask({
       );
     } finally {
       setLoadingCreation(false);
+      setSelectedFilter(null);
     }
   }
 

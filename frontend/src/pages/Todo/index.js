@@ -46,6 +46,8 @@ function Todo() {
             setColorFilter("");
             break;
         }
+      } else {
+        setColorFilter("");
       }
 
       const [responseTask, responseLabels] = await Promise.all([
@@ -148,6 +150,7 @@ function Todo() {
               feedbackCreation={feedbackCreationTask}
               signLoadingData={setLoading}
               setTaskEnableEdit={enableEditionTask}
+              setSelectedFilter={setSelectedFilter}
             />
           </TabPanel>
           <TabPanel header="Concluídas" leftIcon="pi pi-list-check mr-2">
@@ -159,6 +162,7 @@ function Todo() {
               feedbackCreation={feedbackCreationTask}
               signLoadingData={setLoading}
               setTaskEnableEdit={enableEditionTask}
+              setSelectedFilter={setSelectedFilter}
             />
           </TabPanel>
         </TabView>
@@ -170,6 +174,7 @@ function Todo() {
         feedbackCreation={feedbackCreationTask}
         taskEdition={taskEdition}
         setTaskEdition={setTaskEdition}
+        setSelectedFilter={setSelectedFilter}
         labels={labels}
       />
       <Filter

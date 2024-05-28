@@ -48,6 +48,7 @@ function ListTask({
   feedbackCreation,
   signLoadingData,
   setTaskEnableEdit,
+  setSelectedFilter,
 }) {
   const [filterTasks, setFilterTasks] = useState([]);
 
@@ -87,6 +88,7 @@ function ListTask({
       );
     } finally {
       signLoadingData(false);
+      setSelectedFilter(null);
     }
   }
 
@@ -107,6 +109,7 @@ function ListTask({
       );
     } finally {
       signLoadingData(false);
+      setSelectedFilter(null);
     }
   }
 

@@ -16,7 +16,7 @@ export default function Filter({
     if (visible) {
       setFilter(selectedFilter);
     }
-  }, [visible]);
+  }, [visible, selectedFilter]);
 
   function hideDialog(visible) {
     if (!visible) return;
