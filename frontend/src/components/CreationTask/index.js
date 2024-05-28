@@ -36,6 +36,15 @@ function CreationTask({
   function cleanFields() {
     setTitle("");
     setDescription("");
+    setSelectedPriority(null);
+  }
+
+  async function handleTask(taskEdition) {
+    if (taskEdition) {
+      requestEditTask(taskEdition);
+    } else {
+      requestCreateTask();
+    }
   }
 
   async function requestCreateTask() {
@@ -50,7 +59,7 @@ function CreationTask({
 
       const response = await axiosInstance.post(`/tarefa`, body);
 
-      feedbackCreation("Sucesso", response.message, "success");
+      feedbackCreation("Sucesso", response.data.message, "success");
       cleanFields();
       onChangeVisible(false);
       reloadData();
@@ -81,13 +90,13 @@ function CreationTask({
 
       if (
         "statusCode" in response &&
-        response.statusCode === StatusCode.BAD_REQUEST
+        response.data.statusCode === StatusCode.BAD_REQUEST
       ) {
-        feedbackCreation("Error", response.message, "error");
+        feedbackCreation("Error", response.data.message, "error");
         return;
       }
 
-      feedbackCreation("Sucesso", response.message, "success");
+      feedbackCreation("Sucesso", response.data.message, "success");
       setTaskEdition(null);
       cleanFields();
       onChangeVisible(false);
@@ -153,9 +162,7 @@ function CreationTask({
           className="w-full"
           loading={loadingCreation}
           disabled={title === "" || description === ""}
-          onClick={() =>
-            taskEdition ? requestEditTask(taskEdition) : requestCreateTask()
-          }
+          onClick={() => handleTask(taskEdition)}
         />
       </Dialog>
     </div>
